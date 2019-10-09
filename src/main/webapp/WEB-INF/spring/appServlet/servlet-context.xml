@@ -29,6 +29,10 @@
 	
 	<view-controller path="/" view-name="home"/>
 	
+	<view-controller path="/login" view-name="memberPages/login" />
+	
+	<view-controller path="/member/join" view-name="memberPages/join" />
+	
 	
 	
 </beans:beans>

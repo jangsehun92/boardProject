@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+	<insert id="insert" parameterType="Member">
+		insert into MEMBER_TABLE 
+			values(
+				MEMBER_TABLE_SEQ.NEXTVAL,
+				#{member_id},
+				#{member_pw}, 
+				#{member_email}, 
+				#{member_nickName},
+				0,
+				0,
+				SYSDATE
+			)
+	</insert>
+	
+	<update id="updateAuthKey" parameterType="Map">
+		update 
+			MEMBER_TABLE 
+		set 
+			MEMBER_AUTHKEY = #{authKey}
+		where 
+			MEMBER_EMAIL = #{member_email}
+	</update>
+	
+	<update id="updateAuthStatus" parameterType="Map">
+		update
+			MEMBER_TABLE
+		set
+			MEMBER_AUTHSTATUS = 1
+		where
+			MEMBER_AUTHKEY = #{authKey} and MEMBER_EMAIL = #{member_email}
+	</update>
+	
+</mapper>
