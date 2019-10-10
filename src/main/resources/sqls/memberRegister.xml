@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="register">
+
+	<select id="checkEmail" parameterType="String" resultType="int" >
+		select 
+			count(MEMBER_EMAIL)
+		from 
+			MEMBER_TABLE 
+		where 
+			MEMBER_EMAIL = #{email}
+	</select>
+	
+	<insert id="save" parameterType="RegisterRequest">
+		insert into MEMBER_TABLE 
+			values(
+				MEMBER_TABLE_SEQ.NEXTVAL,
+				#{member_id},
+				#{member_pw}, 
+				#{member_email}, 
+				#{member_nickName},
+				#{member_authKey},
+				0,
+				SYSDATE
+			)
+	</insert>
+	
+</mapper>

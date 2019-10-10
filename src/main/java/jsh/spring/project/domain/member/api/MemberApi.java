@@ -1,19 +1,33 @@
 package jsh.spring.project.domain.member.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import jsh.spring.project.domain.member.dto.ResiterRequest;
+import jsh.spring.project.domain.member.dto.RegisterRequest;
+import jsh.spring.project.domain.member.service.MemberRegisterService;
 
 @Controller
 @RequestMapping("/member")
 public class MemberApi {
+	
+	
+	/*
+	@Inject
+	private MemberLoginService memberLoginService;
+	*/
+	
+	@Autowired
+	private MemberRegisterService memberRegisterService;
+	
 
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(ResiterRequest resiterRequest) {
-		System.out.println(resiterRequest.getMember_id());
+	public String register(RegisterRequest dto) {
+		if(memberRegisterService.singUp(dto)) {
+			return "memberPages/login";
+		}
 		return "memberPages/join";
 	}
 

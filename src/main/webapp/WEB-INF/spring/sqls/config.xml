@@ -5,11 +5,13 @@
 	<!-- 패키지.domain클래스 까지 입력 -->
 	<typeAliases>
 		<typeAlias type="jsh.spring.project.domain.member.domain.Member" alias="Member"/>
+		<typeAlias type="jsh.spring.project.domain.member.dto.RegisterRequest" alias="RegisterRequest"/>
 	</typeAliases>
 	
 	<!-- mapper의 위치를 잡아준다. -->
 	<mappers>
 		<mapper resource="/sqls/member.xml"/>
+		<mapper resource="/sqls/memberRegister.xml"/>
 	</mappers>
 
 </configuration>

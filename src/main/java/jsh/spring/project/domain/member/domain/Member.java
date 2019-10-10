@@ -1,6 +1,7 @@
 package jsh.spring.project.domain.member.domain;
 
 import java.sql.Date;
+import java.util.Random;
 
 public class Member {
 	private Long member_no;
@@ -26,4 +27,6 @@ public class Member {
 		this.member_authstatues = member_authstatues;
 		this.member_regDate = member_regDate;
 	}
+	
+	
 }
