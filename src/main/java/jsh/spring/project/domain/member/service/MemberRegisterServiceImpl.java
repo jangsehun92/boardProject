@@ -46,8 +46,6 @@ public class MemberRegisterServiceImpl implements MemberRegisterService {
 			
 			return true;
 		}
-		//인증 이메일을 발송한다.
-		//mailSender(dto.getMember_email(), authKey);
 		return false;
 	}
 
