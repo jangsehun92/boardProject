@@ -41,21 +41,12 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSession" />
 	</bean>
-	
-<<<<<<< HEAD
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	<property name="host" value="smtp.gmail.com" />
-	<property name="port" value="587" />
-	<property name="username" value="실제 관리자 계정" />
-	<property name="password" value="실제 관리자 " />
-=======
 	<!-- email -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	<property name="host" value="smtp.gmail.com" />
 	<property name="port" value="587" />
 	<property name="username" value="@gmail.com" />
 	<property name="password" value="password" />
->>>>>>> member
 	<property name="javaMailProperties">
 		<props>
 			<prop key="mail.transport.protocol">smtp</prop>
