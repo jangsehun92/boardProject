@@ -22,8 +22,6 @@ function check_form(){
 	var member_email = $("#member_email").val().replace(/\s|/gi,'');
 	var member_nickName = $("#member_nickName").val().replace(/\s|/gi,'');
 	
-	alert(member_nickName);
-	
 	if(member_id==""){
 		alert("아이디를 입력해주세요.");
 		$("#member_id").focus();
