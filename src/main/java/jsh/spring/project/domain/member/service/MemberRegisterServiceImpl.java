@@ -1,7 +1,5 @@
 package jsh.spring.project.domain.member.service;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -48,9 +46,6 @@ public class MemberRegisterServiceImpl implements MemberRegisterService {
 			
 			return true;
 		}
-		
 		return false;
 	}
-	
-	
 }
