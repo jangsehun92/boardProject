@@ -12,17 +12,35 @@
 	</select>
 	
 	<insert id="save" parameterType="RegisterRequest">
-		insert into MEMBER_TABLE 
-			values(
-				MEMBER_TABLE_SEQ.NEXTVAL,
-				#{member_id},
-				#{member_pw}, 
-				#{member_email}, 
-				#{member_nickName},
-				#{member_authKey},
-				0,
-				SYSDATE
-			)
+		insert into 
+			MEMBER_TABLE 
+		values(
+			MEMBER_TABLE_SEQ.NEXTVAL,
+			#{member_id},
+			#{member_pw}, 
+			#{member_email}, 
+			#{member_nickName},
+			#{member_authKey},
+			0,
+			SYSDATE
+		)
 	</insert>
 	
+	<update id="updateStatus" parameterType="RegisterConfirmRequest">
+		update 
+			MEMBER_TABLE
+		set 
+			MEMBER_AUTHSTATUS = 1
+		where 
+			MEMBER_EMAIL = #{email} AND MEMBER_AUTHKEY = #{authKey}
+	</update>
+	
+	<update id="updateAuthKey" parameterType="RegisterConfirmRequest">
+		update 
+			MEMBER_TABLE
+		set 
+			MEMBER_AUTHKEY = #{authKey}
+		where 
+			MEMBER_EMAIL = #{email}
+	</update>
 </mapper>

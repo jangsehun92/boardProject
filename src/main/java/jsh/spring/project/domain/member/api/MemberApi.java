@@ -4,8 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
 import jsh.spring.project.domain.member.dto.RegisterRequest;
@@ -20,33 +23,33 @@ public class MemberApi {
 	@Autowired
 	private MemberRegisterService memberRegisterService;
 	
-
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(RegisterRequest dto) throws Exception {
-		if(memberRegisterService.singUp(dto)) {
-			return "memberPages/login";
-		}
-		return "memberPages/join";
+	public String register(Model model, RegisterRequest dto) throws Exception {
+		memberRegisterService.singUp(dto);
+		model.addAttribute("email", dto.getMember_email());
+		return "memberPages/sendEmail";
 	}
 	
 	@RequestMapping(value = "/registerConfirm", method = RequestMethod.GET)
-	public String registerConfirm(RegisterConfirmRequest dto) {
-		
-		logger.info(dto.getEmail());
-		logger.info(dto.getAuthKey());
-		//DB에 있는 email과 authKey를 비교하고 맞으면 authStatu를 업데이트 해주고 인증이 완료 되었다는 페이지로 보내주자.
-		return "memberPage/login";
+	public String registerConfirm(Model model, RegisterConfirmRequest dto) {
+		memberRegisterService.updateAuthStatus(dto);
+		return "memberPages/login";
 	}
-
-	// 회원탈퇴
-	public String delete() {
-		return "";
+	
+	@RequestMapping(value = "resendEmail/{email}", method = RequestMethod.GET)
+	public String resendEmail(Model model, @PathVariable("email") String email) throws Exception {
+		memberRegisterService.resendEmail(email);
+		model.addAttribute("email", email);
+		return "memberPages/sendEmail";
 	}
 
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login() {
+		//이메일 인증이 된 member
+		
+		//이메일 인증이 되지 않은 member
 		return "";
 	}
 

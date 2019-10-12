@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="jsh.spring.project.domain.member.domain.Member" alias="Member"/>
 		<typeAlias type="jsh.spring.project.domain.member.dto.RegisterRequest" alias="RegisterRequest"/>
+		<typeAlias type="jsh.spring.project.domain.member.dto.RegisterConfirmRequest" alias="RegisterConfirmRequest"/>
 	</typeAliases>
 	
 	<!-- mapper의 위치를 잡아준다. -->
