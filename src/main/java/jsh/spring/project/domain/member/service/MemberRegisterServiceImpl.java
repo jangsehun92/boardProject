@@ -73,5 +73,4 @@ public class MemberRegisterServiceImpl implements MemberRegisterService {
 		sendMail.setTo(email);
 		sendMail.send();
 	}
-
 }

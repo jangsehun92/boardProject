@@ -1,5 +1,7 @@
 package jsh.spring.project.domain.member.api;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jsh.spring.project.domain.member.dto.LoginRequest;
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
 import jsh.spring.project.domain.member.dto.RegisterRequest;
+import jsh.spring.project.domain.member.service.MemberLoginService;
 import jsh.spring.project.domain.member.service.MemberRegisterService;
 
 @Controller
@@ -22,6 +25,9 @@ public class MemberApi {
 	
 	@Autowired
 	private MemberRegisterService memberRegisterService;
+	
+	@Autowired
+	private MemberLoginService memberLoginService;
 	
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -37,6 +43,7 @@ public class MemberApi {
 		return "memberPages/login";
 	}
 	
+	//post방식으로 바꾸기(Object로 받기)
 	@RequestMapping(value = "resendEmail/{email}", method = RequestMethod.GET)
 	public String resendEmail(Model model, @PathVariable("email") String email) throws Exception {
 		memberRegisterService.resendEmail(email);
@@ -46,16 +53,18 @@ public class MemberApi {
 
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login() {
-		//이메일 인증이 된 member
-		
-		//이메일 인증이 되지 않은 member
-		return "";
+	public String login(HttpSession session, LoginRequest dto) {
+		if(memberLoginService.signin().getMember_authstatues() == "0") {
+			return "memberPages/sendEmail";
+		}
+		return "home";
 	}
 
 	// 로그아웃
-	public String logout() {
-		return "";
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "memberPages/login";
 	}
 
 	// member 정보 보기

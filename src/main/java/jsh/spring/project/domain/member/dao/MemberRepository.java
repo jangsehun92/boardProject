@@ -4,12 +4,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import jsh.spring.project.domain.member.domain.Member;
+import jsh.spring.project.domain.member.dto.LoginRequest;
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
 import jsh.spring.project.domain.member.dto.RegisterRequest;
 
 @Repository
 public class MemberRepository {
-	
+	//resultMap을 정의하여 리턴해주자
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -22,12 +24,18 @@ public class MemberRepository {
 	public int save(RegisterRequest dto) {
 		return sqlSession.insert("register.save",dto);
 	}
-	
+	//이메일 인증 처리(Status update)
 	public int updateStatus(RegisterConfirmRequest dto) {
 		return sqlSession.update("register.updateStatus", dto);
 	}
-	
+	//이메일 재발송(AuthKey update)
 	public int updateAuthKey(RegisterConfirmRequest dto) {
 		return sqlSession.update("register.updateAuthKey", dto);
 	}
+	
+	//로그인
+	public Member login(LoginRequest dto) {
+		return sqlSession.selectOne("member.login", dto);
+	}
+	
 }

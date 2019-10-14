@@ -1,7 +1,6 @@
 package jsh.spring.project.domain.member.domain;
 
 import java.sql.Date;
-import java.util.Random;
 
 public class Member {
 	private Long member_no;
@@ -27,6 +26,69 @@ public class Member {
 		this.member_authstatues = member_authstatues;
 		this.member_regDate = member_regDate;
 	}
-	
+
+	public Long getMember_no() {
+		return member_no;
+	}
+
+	public void setMember_no(Long member_no) {
+		this.member_no = member_no;
+	}
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
+	public String getMember_pw() {
+		return member_pw;
+	}
+
+	public void setMember_pw(String member_pw) {
+		this.member_pw = member_pw;
+	}
+
+	public String getMember_email() {
+		return member_email;
+	}
+
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
+
+	public String getMember_authkey() {
+		return member_authkey;
+	}
+
+	public void setMember_authkey(String member_authkey) {
+		this.member_authkey = member_authkey;
+	}
+
+	public String getMember_authstatues() {
+		return member_authstatues;
+	}
+
+	public void setMember_authstatues(String member_authstatues) {
+		this.member_authstatues = member_authstatues;
+	}
+
+	public Date getMember_regDate() {
+		return member_regDate;
+	}
+
+	public void setMember_regDate(Date member_regDate) {
+		this.member_regDate = member_regDate;
+	}
 	
 }
