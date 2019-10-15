@@ -26,7 +26,9 @@ public class MemberRegisterServiceImpl implements MemberRegisterService {
 		String authKey = new AuthKey().getKey(64, false);
 		dto.setMember_authKey(authKey);
 		
-		//DB에 insert가 실패하면
+		//비밀번호 암호화 
+		
+		//저장
 		memberRepository.save(dto);
 		//mail 발송
 		MailUtils sendMail = new MailUtils(mailSender);

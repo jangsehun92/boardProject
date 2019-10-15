@@ -21,11 +21,11 @@
 						아이디 로그인
 					</h5>
 				</div>
-				<form class="form-signup form-user panel-body">
+				<form class="form-signup form-user panel-body" method="post" action="/member/login">
 					<fieldset>
-						<input type="text" class="form-control input-sm" id="user_id" name="user_id" placeholder="아이디">
+						<input type="text" class="form-control input-sm" id="member_id" name="member_id" placeholder="아이디">
 						
-						<input type="password" class="form-control input-sm" id="user_pw" name="uesr_pw" placeholder="비밀번호" style="margin-top: 10px;">
+						<input type="password" class="form-control input-sm" id="member_pw" name="member_pw" placeholder="비밀번호" style="margin-top: 10px;">
 					</fieldset>
 					
 					<button class="btn btn-primary btn-block" type="submit" style="margin-top: 10px;">로그인</button>

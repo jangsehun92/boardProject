@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jsh.spring.project.domain.member.domain.Member;
 import jsh.spring.project.domain.member.dto.LoginRequest;
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
 import jsh.spring.project.domain.member.dto.RegisterRequest;
@@ -53,10 +54,20 @@ public class MemberApi {
 
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpSession session, LoginRequest dto) {
-		if(memberLoginService.signin().getMember_authstatues() == "0") {
+	public String login(Model model, HttpSession session, LoginRequest dto) {
+		//session에 member 객체를 담아주기 전에 이미 session에 담겨있는지 확인
+		if(session.getAttribute("member") != null) {
+			session.removeAttribute("member");
+		}
+		
+		Member member = memberLoginService.signin(dto);
+		//email인증이 완료되지 않았다면
+		if(member.getMember_authstatus().equals("0")) {
+			model.addAttribute("email", member.getMember_email());
 			return "memberPages/sendEmail";
 		}
+		
+		session.setAttribute("member", member);
 		return "home";
 	}
 
