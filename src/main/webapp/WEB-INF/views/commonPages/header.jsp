@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,9 +48,17 @@ $(function(){
 		<li><hr></li>
 	  </ul>
 	  <ul class="nav navbar-nav navbar-right">
-		<li class="button"><a href="/login">로그인 <span class="sr-only">(current)</span></a></li>
-		<li class="button"><a href="/member/join">회원가입 <span class="sr-only">(current)</span></a></li>
-	  </ul>
+					<c:choose>
+						<c:when test="${empty member}">
+							<li class="button"><a href="/login">로그인 <span class="sr-only">(current)</span></a></li>
+							<li class="button"><a href="/member/join">회원가입 <span class="sr-only">(current)</span></a></li>
+						</c:when>
+
+						<c:otherwise>
+							<li class="list-group-item"><span>${ member.member_nickname}</span> </li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
 	</div><!--/.nav-collapse -->
   </div>
 </nav>
