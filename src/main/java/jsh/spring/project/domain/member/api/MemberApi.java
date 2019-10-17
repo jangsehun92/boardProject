@@ -1,10 +1,10 @@
 package jsh.spring.project.domain.member.api;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +24,10 @@ public class MemberApi {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberApi.class);
 	
-	@Autowired
+	@Inject
 	private MemberRegisterService memberRegisterService;
 	
-	@Autowired
+	@Inject
 	private MemberLoginService memberLoginService;
 	
 	// 회원가입
@@ -55,12 +55,14 @@ public class MemberApi {
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, HttpSession session, LoginRequest dto) {
+		//view 단에서 영어로 보내도록 하자(비밀번호가 한글로 들어오니까 오류발생)
 		//session에 member 객체를 담아주기 전에 이미 session에 담겨있는지 확인
 		if(session.getAttribute("member") != null) {
 			session.removeAttribute("member");
 		}
 		
 		Member member = memberLoginService.signin(dto);
+		
 		//email인증이 완료되지 않았다면
 		if(member.getMember_authstatus().equals("0")) {
 			model.addAttribute("email", member.getMember_email());

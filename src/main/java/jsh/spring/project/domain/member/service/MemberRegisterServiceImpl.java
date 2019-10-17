@@ -1,6 +1,7 @@
 package jsh.spring.project.domain.member.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,10 @@ import jsh.spring.project.global.util.MailUtils;
 @Service
 public class MemberRegisterServiceImpl implements MemberRegisterService {
 	
-	@Autowired
+	@Inject
 	private MemberRepository memberRepository;
 	
-	@Autowired
+	@Inject
 	private JavaMailSender mailSender;
 	
 	@Override

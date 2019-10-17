@@ -1,7 +1,6 @@
 package jsh.spring.project.domain.member.dao;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import jsh.spring.project.domain.member.domain.Member;
@@ -12,8 +11,11 @@ import jsh.spring.project.domain.member.dto.RegisterRequest;
 @Repository
 public class MemberRepository {
 	//resultMap을 정의하여 리턴해주자
-	@Autowired
-	private SqlSession sqlSession;
+	private final SqlSession sqlSession;
+	
+	public MemberRepository(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 	
 	//회원가입 시 가입된 이메일이 있는지 확인 
 	public int checkEmail(String email) {

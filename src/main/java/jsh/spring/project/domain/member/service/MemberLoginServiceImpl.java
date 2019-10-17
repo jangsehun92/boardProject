@@ -17,7 +17,7 @@ public class MemberLoginServiceImpl implements MemberLoginService{
 	
 	@Override
 	public Member signin(LoginRequest dto) {
-		//비밀번호 암호화 
+		//비밀번호 암호화 필요함
 		return memberRepository.login(dto);
 	}
 
