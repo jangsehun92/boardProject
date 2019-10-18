@@ -60,7 +60,7 @@ public class MemberApi {
 		if(session.getAttribute("member") != null) {
 			session.removeAttribute("member");
 		}
-		
+		//MemberResponse객체를 이용하자. 
 		Member member = memberLoginService.signin(dto);
 		
 		//email인증이 완료되지 않았다면

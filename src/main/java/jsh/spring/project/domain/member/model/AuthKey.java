@@ -1,4 +1,4 @@
-package jsh.spring.project.domain.member.domain;
+package jsh.spring.project.domain.member.model;
 
 import java.util.Random;
 

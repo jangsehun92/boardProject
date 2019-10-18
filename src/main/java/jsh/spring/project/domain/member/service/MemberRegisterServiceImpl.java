@@ -6,9 +6,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import jsh.spring.project.domain.member.dao.MemberRepository;
-import jsh.spring.project.domain.member.domain.AuthKey;
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
 import jsh.spring.project.domain.member.dto.RegisterRequest;
+import jsh.spring.project.domain.member.model.AuthKey;
 import jsh.spring.project.global.util.MailUtils;
 
 @Service
