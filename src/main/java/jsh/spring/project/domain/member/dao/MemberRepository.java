@@ -2,8 +2,6 @@ package jsh.spring.project.domain.member.dao;
 
 import org.springframework.stereotype.Repository;
 
-import jsh.spring.project.domain.member.domain.Member;
-import jsh.spring.project.domain.member.dto.LoginRequest;
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
 import jsh.spring.project.domain.member.dto.RegisterRequest;
 
@@ -18,7 +16,5 @@ public interface MemberRepository {
 	public int updateStatus(RegisterConfirmRequest dto);
 	//이메일 재발송(AuthKey update)
 	public int updateAuthKey(RegisterConfirmRequest dto);
-	//로그인
-	public Member login(LoginRequest dto);
 	
 }

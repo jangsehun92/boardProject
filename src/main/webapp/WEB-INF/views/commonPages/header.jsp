@@ -49,13 +49,13 @@ $(function(){
 	  </ul>
 	  <ul class="nav navbar-nav navbar-right">
 					<c:choose>
-						<c:when test="${empty member}">
+						<c:when test="${empty memberResponse}">
 							<li class="button"><a href="/login">로그인 <span class="sr-only">(current)</span></a></li>
 							<li class="button"><a href="/member/join">회원가입 <span class="sr-only">(current)</span></a></li>
 						</c:when>
 
 						<c:otherwise>
-							<li class="list-group-item"><span>${ member.member_nickname}</span> </li>
+							<li class="list-group-item"><span>${ memberResponse.member_nickname}</span> </li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
