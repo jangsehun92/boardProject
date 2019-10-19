@@ -1,42 +1,52 @@
 package jsh.spring.project.domain.member.dto;
 
 public class MemberResponse {
-	private String member_email;
-	private String member_nickname;
-	private String member_authstatus;
+	private int number;
+	private String email;
+	private String nickname;
+	private String status;
 	
 	public MemberResponse() {
 		
 	}
 	
-	public MemberResponse(String member_nickname, String member_authstatus, String member_email) {
-		this.member_email = member_email;
-		this.member_nickname = member_nickname;
-		this.member_authstatus = member_authstatus;
-	}
-	
-	public String getMember_eamil() {
-		return member_email;
-	}
-	
-	public void setMember_email(String member_email) {
-		this.member_email = member_email;
+	public MemberResponse(int number, String email, String nickname, String status) {
+		this.number = number;
+		this.email = email;
+		this.nickname = nickname;
+		this.status = status;
 	}
 
-	public String getMember_nickname() {
-		return member_nickname;
+	public int getNumber() {
+		return number;
 	}
 
-	public void setMember_nickname(String member_nickname) {
-		this.member_nickname = member_nickname;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
-	public String getMember_authstatus() {
-		return member_authstatus;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMember_authstatus(String member_authstatus) {
-		this.member_authstatus = member_authstatus;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

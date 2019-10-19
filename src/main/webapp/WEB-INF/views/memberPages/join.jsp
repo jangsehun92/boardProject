@@ -17,32 +17,25 @@
 //유효성 검사
 function check_form(){
 	//replace 로 공백 제거
-	var member_id = $("#member_id").val().replace(/\s|/gi,'');
-	var member_pw = $("#member_pw").val().replace(/\s|/gi,'');
-	var member_email = $("#member_email").val().replace(/\s|/gi,'');
-	var member_nickName = $("#member_nickName").val().replace(/\s|/gi,'');
+	var email = $("#email").val().replace(/\s|/gi,'');
+	var password = $("#password").val().replace(/\s|/gi,'');
+	var nickname = $("#nickname").val().replace(/\s|/gi,'');
 	
-	if(member_id==""){
-		alert("아이디를 입력해주세요.");
-		$("#member_id").focus();
-		return false;
-	}
-	
-	if(member_pw==""){
-		alert("비밀번호를 입력해주세요.");
-		$("#member_pw").focus();
-		return false;
-	}
-	
-	if(member_email==""){
+	if(email==""){
 		alert("이메일을 입력해주세요.");
-		$("#member_email").focus();
+		$("#email").focus();
 		return false;
 	}
 	
-	if(member_nickName==""){
+	if(password==""){
+		alert("비밀번호를 입력해주세요.");
+		$("#password").focus();
+		return false;
+	}
+	
+	if(nickname==""){
 		alert("닉네임을 입력해주세요.");
-		$("#member_nickName").focus();
+		$("#nickname").focus();
 		return false;
 	}
 }
@@ -58,13 +51,11 @@ function check_form(){
 				</div>
 				<form method="post" action="/member/register" class="form-signup form-user panel-body" onsubmit="return check_form();">
 					<fieldset>
-						<input type="text" class="form-control input-sm" id="member_id" name="member_id" placeholder="아이디">
+						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" style="margin-top: 10px;">
 						
-						<input type="password" class="form-control input-sm" id="member_pw" name="member_pw" placeholder="비밀번호" style="margin-top: 10px;">
+						<input type="password" class="form-control input-sm" id="password" name="password" placeholder="비밀번호" style="margin-top: 10px;">
 						
-						<input type="text" class="form-control input-sm" id="member_email" name="member_email" placeholder="이메일" style="margin-top: 10px;">
-						
-						<input type="text" class="form-control input-sm" id="member_nickName" name="member_nickName" placeholder="닉네임" style="margin-top: 10px;">
+						<input type="text" class="form-control input-sm" id="nickname" name="nickname" placeholder="닉네임" style="margin-top: 10px;">
 					</fieldset>
 					<input type="submit" class="btn btn-primary btn-block" value="회원가입" style="margin-top: 10px;">
 				</form>

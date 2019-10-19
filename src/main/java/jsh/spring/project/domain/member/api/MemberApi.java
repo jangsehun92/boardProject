@@ -27,20 +27,23 @@ public class MemberApi {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberApi.class);
 	
-	@Inject
-	private MemberRegisterService memberRegisterService;
+	private final MemberRegisterService memberRegisterService;
 	
-	@Inject
-	private MemberSearchService memberSearchService;
+	private final MemberSearchService memberSearchService;
 	
-	@Inject
-	private MemberProfileService memberProfileService;
+	private final MemberProfileService memberProfileService;
+	
+	public MemberApi(MemberRegisterService memberRegisterService, MemberSearchService memberSearchService, MemberProfileService memberProfileService) {
+		this.memberRegisterService = memberRegisterService;
+		this.memberSearchService = memberSearchService;
+		this.memberProfileService = memberProfileService;
+	}
 	
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(Model model, RegisterRequest dto) throws Exception {
 		memberRegisterService.singUp(dto);
-		model.addAttribute("email", dto.getMember_email());
+		model.addAttribute("email", dto.getEmail());
 		return "memberPages/sendEmail";
 	}
 	
@@ -66,12 +69,11 @@ public class MemberApi {
 		if(session.getAttribute("member") != null) {
 			session.removeAttribute("member");
 		}
-		//MemberResponse객체를 이용하자. 
 		MemberResponse memberResponse = memberSearchService.signIn(dto);
 		
 		//email인증이 완료되지 않았다면
-		if(memberResponse.getMember_authstatus().equals("0")) {
-			model.addAttribute("email", memberResponse.getMember_eamil());
+		if(memberResponse.getStatus().equals("0")) {
+			model.addAttribute("email", memberResponse.getEmail());
 			return "memberPages/sendEmail";
 		}
 		
@@ -96,6 +98,7 @@ public class MemberApi {
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 	public String profileUpdate(MemberProfileUpdateRequest dto) {
 		memberProfileService.updateProfile(dto);
+		
 		return "";
 	}
 	

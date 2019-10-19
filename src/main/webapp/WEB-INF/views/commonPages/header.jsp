@@ -55,7 +55,7 @@ $(function(){
 						</c:when>
 
 						<c:otherwise>
-							<li class="list-group-item"><span>${ memberResponse.member_nickname}</span> </li>
+							<li class="list-group-item"><span>${ memberResponse.nickname}</span> </li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

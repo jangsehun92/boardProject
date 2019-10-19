@@ -1,5 +1,6 @@
 package jsh.spring.project.domain.member.dto;
 
+//수정필요
 public class MemberProfileUpdateRequest {
 	private String email;
 	private String nickname;

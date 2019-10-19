@@ -1,63 +1,45 @@
 package jsh.spring.project.domain.member.dto;
 
 public class RegisterRequest {
-	private String member_id;
-	private String member_pw;
-	private String member_email;
-	private String member_nickName;
-	private String member_authKey;
+	private String email;
+	private String password;
+	private String nickname;
 	//sns 회원가입 추가 시 추가적으로 변수 선언
 	
 	public RegisterRequest() {
 		
 	}
 	
-	public RegisterRequest(String member_id, String member_pw, String member_email, String member_nickName) {
-		this.member_id = member_id;
-		this.member_pw = member_pw;
-		this.member_email = member_email;
-		this.member_nickName = member_nickName;
-	}
-	//불필요한 getter,setter 제거하기
-	public String getMember_id() {
-		return member_id;
+	public RegisterRequest(String email, String password, String nickname) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
 	}
 
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	public String getEmail() {
+		return email;
 	}
 
-	public String getMember_pw() {
-		return member_pw;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setMember_pw(String member_pw) {
-		this.member_pw = member_pw;
+	public String getPassword() {
+		return password;
 	}
 
-	public String getMember_email() {
-		return member_email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void setMember_email(String member_email) {
-		this.member_email = member_email;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public String getMember_nickName() {
-		return member_nickName;
-	}
-
-	public void setMember_nickName(String member_nickName) {
-		this.member_nickName = member_nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
-	public String getMember_authKey() {
-		return member_authKey;
-	}
-	
-	public void setMember_authKey(String authKey) {
-		this.member_authKey = authKey;
-	}
 	
 	
 }
