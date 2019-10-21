@@ -8,7 +8,6 @@ import jsh.spring.project.domain.member.dto.RegisterRequest;
 
 @Repository
 public class MemberRepositoryImpl implements MemberRepository {
-	// resultMap을 정의하여 리턴해주자
 	private final SqlSession sqlSession;
 
 	public MemberRepositoryImpl(SqlSession sqlSession) {
@@ -24,15 +23,15 @@ public class MemberRepositoryImpl implements MemberRepository {
 	public int save(RegisterRequest dto) {
 		return sqlSession.insert("register.save", dto);
 	}
-
+	
 	// 이메일 인증 처리(Status update)
 	public int updateStatus(RegisterConfirmRequest dto) {
 		return sqlSession.update("register.updateStatus", dto);
 	}
 
-	// 이메일 재발송(AuthKey update)
-	public int updateAuthKey(RegisterConfirmRequest dto) {
-		return sqlSession.update("register.updateAuthKey", dto);
+	@Override
+	public int checkStatus(String email) {
+		return sqlSession.selectOne("register.checkStatus",email);
 	}
 
 }
