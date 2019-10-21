@@ -6,29 +6,10 @@
 			AUTH_TB 
 		values(
 			AUTH_TB_SEQ.NEXTVAL,
-			#{email},
-			#{authKey}, 
-			#{type}, 
-			'N'
+			#{mb_no},
+			#{auth_key}, 
+			#{auth_type}, 
+			'N',
 		)
 	</insert>
-	
-	<update id="expired" parameterType="String">
-		update 
-			AUTH_TB
-		set 
-			AUTH_EXPIRED = 'Y' and
-			AUTH_KEY = 'KEY EXPIRED'
-		where 
-			mb_email = #{email}
-	</update>
-	
-	<update id="updateAuthKey" parameterType="RegisterConfirmRequest">
-		update 
-			AUTH_TB
-		set 
-			AUTH_KEY = #{authKey}
-		where 
-			MB_EMAIL = #{email}
-	</update>
 </mapper>

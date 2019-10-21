@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="register">
+	<!-- resultMap 정의 할까?-->
 	<select id="checkEmail" parameterType="String" resultType="int" >
 		select 
-			count(MB_EMAIL) 
+			count(MB_EMAIL)
 		from 
 			MEMBER_TB 
 		where 
-			MB_EMAIL = #{email} 
-	</select>
-	
-	<select id="checkStatus" parameterType="String" resultType="int" >
-		select 
-			count(MB_EMAIL) 
-		from 
-			MEMBER_TB 
-		where 
-			MB_EMAIL = #{email} and
-			MB_STATUS = 'N'
+			MB_EMAIL = #{email}
 	</select>
 	
 	<insert id="save" parameterType="RegisterRequest">
 		insert into 
 			MEMBER_TB 
 		values(
-			MEMBER_TB_seq.NEXTVAL,
+			MEMBER_TB_SEQ.NEXTVAL,
 			#{email},
 			#{password}, 
 			#{nickname}, 
@@ -33,22 +24,24 @@
 		)
 	</insert>
 	
+	<!-- 
 	<update id="updateStatus" parameterType="RegisterConfirmRequest">
 		update 
 			MEMBER_TB
 		set 
-			MB_STATUS = 'Y'
+			MB_STATUS = Y
 		where 
-			#{email} = (select
-							mb_email
-						from
-							auth_tb
-						where 
-							mb_email = #{email} and 
-							auth_key = #{authKey} and 
-							auth_type = 10 and 
-							auth_expired = 'N')	
-							
+			MB_EMAIL = #{email} AND MB_AUTHKEY = #{authKey}
+			2번째 조건으로 auth_tb을 조회해서 해당 email또는 회원번호로 key가 같은지 확인해야함 
 	</update>
 	
+	<update id="updateAuthKey" parameterType="RegisterConfirmRequest">
+		update 
+			MEMBER_TB
+		set 
+			MB_AUTHKEY = #{authKey}
+		where 
+			MEMBER_EMAIL = #{email}
+	</update>
+	-->
 </mapper>

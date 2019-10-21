@@ -19,7 +19,6 @@
 		<mapper resource="/sqls/member.xml"/>
 		<mapper resource="/sqls/memberRegister.xml"/>
 		<mapper resource="/sqls/memberSupport.xml"/>
-		<mapper resource="/sqls/authRegister.xml"/>
 	</mappers>
 
 </configuration>

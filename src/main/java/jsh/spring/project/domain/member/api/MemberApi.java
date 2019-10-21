@@ -1,5 +1,6 @@
 package jsh.spring.project.domain.member.api;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -47,12 +48,13 @@ public class MemberApi {
 	}
 	
 	@RequestMapping(value = "/registerConfirm", method = RequestMethod.GET)
-	public String registerConfirm(Model model, RegisterConfirmRequest dto) throws Exception {
-		memberRegisterService.updateStatus(dto);
+	public String registerConfirm(Model model, RegisterConfirmRequest dto) {
+		memberRegisterService.updateAuthStatus(dto);
 		return "memberPages/login";
 	}
 	
-	@RequestMapping(value = "resendEmail/{email:.+}", method = RequestMethod.GET)
+	//post방식으로 바꾸기(Object로 받기)
+	@RequestMapping(value = "resendEmail/{email}", method = RequestMethod.GET)
 	public String resendEmail(Model model, @PathVariable("email") String email) throws Exception {
 		memberRegisterService.resendEmail(email);
 		model.addAttribute("email", email);
