@@ -17,10 +17,11 @@
 		update 
 			AUTH_TB
 		set 
-			AUTH_EXPIRED = 'Y' and
-			AUTH_KEY = 'KEY EXPIRED'
+			AUTH_EXPIRED = 'Y',
+			AUTH_KEY = 'EXPIRE'
 		where 
-			mb_email = #{email}
+			mb_email = #{email} and
+			auth_key = #{authKey}
 	</update>
 	
 	<update id="updateAuthKey" parameterType="RegisterConfirmRequest">

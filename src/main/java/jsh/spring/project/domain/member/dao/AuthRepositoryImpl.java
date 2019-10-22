@@ -22,8 +22,8 @@ public class AuthRepositoryImpl implements AuthRepository{
 	}
 
 	@Override
-	public int expired(String email) {
-		return sqlSession.update("auth.expired", email);
+	public int expire(RegisterConfirmRequest dto) {
+		return sqlSession.update("auth.expired", dto);
 	}
 
 	@Override

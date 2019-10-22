@@ -38,7 +38,6 @@ public class MemberApi {
 		this.memberProfileService = memberProfileService;
 	}
 	
-	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(Model model, RegisterRequest dto) throws Exception {
 		memberRegisterService.singUp(dto);
@@ -59,27 +58,23 @@ public class MemberApi {
 		return "memberPages/sendEmail";
 	}
 
-	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, HttpSession session, LoginRequest dto) {
-		//view 단에서 영어로 보내도록 하자(비밀번호가 한글로 들어오니까 오류발생)
-		//session에 member 객체를 담아주기 전에 이미 session에 담겨있는지 확인
+		//view 단에서 정규식을 통해 영어로 보내도록 하자(비밀번호가 한글로 들어오니까 오류발생)
 		if(session.getAttribute("member") != null) {
 			session.removeAttribute("member");
 		}
 		MemberResponse memberResponse = memberSearchService.signIn(dto);
 		
-		//email인증이 완료되지 않았다면
-		if(memberResponse.getStatus().equals("0")) {
-			model.addAttribute("email", memberResponse.getEmail());
-			return "memberPages/sendEmail";
+		if(memberResponse.checkStatus()) {
+			session.setAttribute("memberResponse", memberResponse);
+			return "home";
 		}
 		
-		session.setAttribute("memberResponse", memberResponse);
-		return "home";
+		model.addAttribute("email", memberResponse.getEmail());
+		return "memberPages/sendEmail";
 	}
 
-	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();

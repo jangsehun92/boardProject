@@ -49,4 +49,11 @@ public class MemberResponse {
 		this.status = status;
 	}
 	
+	public boolean checkStatus() {
+		if(status.equals("Y")) {
+			return true;
+		}
+		return false;
+	}
+	
 }

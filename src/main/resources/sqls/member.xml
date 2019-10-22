@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="member">
-	<select id="login" parameterType="LoginRequest" resultType="MemberResponse">
+<!-- resultMap 작성해줘야함 -->
+<mapper namespace="member">	
+
+	<resultMap id="memberResultMap" type="MemberResponse">
+		<result property="number" column="mb_no"/>
+		<result property="email" column="mb_email"/>
+		<result property="nickname" column="mb_nickname"/>
+		<result property="status" column="mb_status"/>
+	</resultMap>
+	
+	<select id="login" parameterType="LoginRequest" resultMap="memberResultMap">
 		select
-			MEMBER_EMAIL,
-			MEMBER_NICKNAME,
-			MEMBER_AUTHSTATUS
+			MB_NO,
+			MB_EMAIL,
+			MB_NICKNAME,
+			MB_STATUS
 		from 
-			MEMBER_TABLE
+			MEMBER_TB
 		where 
-			MEMBER_ID = #{member_id} and MEMBER_PW = #{member_pw}
+			MB_EMAIL = #{email} and MB_PASSWORD = #{password}
 	</select>	
 </mapper>

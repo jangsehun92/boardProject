@@ -37,10 +37,8 @@ public class MemberRegisterServiceImpl implements MemberRegisterService {
 		paramMap.put("email", dto.getEmail());
 		paramMap.put("authKey", authKey);
 		paramMap.put("type", 10);
-		
 		authRepository.save(paramMap);
 		
-		//mail 발송
 		MailUtils sendMail = new MailUtils(mailSender);
 		sendMail.setSubject("[ JSH Board Project ] 회원가입 이메일 인증");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
@@ -58,11 +56,11 @@ public class MemberRegisterServiceImpl implements MemberRegisterService {
 	}
 
 	@Override
+	@Transactional
 	public void updateStatus(RegisterConfirmRequest dto) throws Exception {
 		memberRepository.updateStatus(dto);
-		authRepository.expired(dto.getEmail());
+		authRepository.expire(dto);
 		
-		// mail 발송
 		MailUtils sendMail = new MailUtils(mailSender);
 		sendMail.setSubject("[ JSH Board Project ] 이메일 인증 완료");
 		sendMail.setText(new StringBuffer().append("<h1>[ 이메일 인증 완료 ]</h1>")
@@ -74,15 +72,12 @@ public class MemberRegisterServiceImpl implements MemberRegisterService {
 	}
 
 	@Override
+	@Transactional
 	public void resendEmail(String email) throws Exception {
 		memberRepository.checkEmail(email);
-		//인증키 재생성
 		String authKey = new AuthKey().getKey(64, false);
-		
-		//해당 이메일로 인증키 update
 		authRepository.updateAuthKey(new RegisterConfirmRequest(email, authKey));
 		
-		//mail 발송
 		MailUtils sendMail = new MailUtils(mailSender);
 		sendMail.setSubject("[ JSH Board Project ](재발송)회원가입 이메일 인증");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
