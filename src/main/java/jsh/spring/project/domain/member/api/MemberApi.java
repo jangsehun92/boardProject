@@ -83,7 +83,7 @@ public class MemberApi {
 
 	// member 정보 보기(필요없을 듯함. 세션에 담겨있는 값으로만 표시해도 충분할듯[이메일,닉네임 정보])
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public String profile(HttpSession session) {
+	public String profile(HttpSession session, Model model) {
 		return "memberPages/profile";
 	}
 

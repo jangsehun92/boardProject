@@ -40,14 +40,14 @@
 			MB_STATUS = 'Y'
 		where 
 			#{email} = (select
-							mb_email
+							MB_EMAIL
 						from
-							auth_tb
+							AUTH_TB
 						where 
-							mb_email = #{email} and 
-							auth_key = #{authKey} and 
-							auth_type = 10 and 
-							auth_expired = 'N')	
+							MB_EMAIL = #{email} and 
+							AUTH_KEY = #{authKey} and 
+							AUTH_TYPE = 10 and 
+							AUTH_EXPIRED = 'N')	
 							
 	</update>
 	

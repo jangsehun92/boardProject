@@ -2,10 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="member">
 	<update id="prorileUpdate" parameterType="MemberProfileUpdateRequest">
-	
 	</update>	
 	
 	<update id="passwordChange" parameterType="MemberPasswordChangeRequest">
-	
+		update
+			MEMBER_TB
+		set
+			MB_PASSWORD = #{password}
+		where
+			#{email} = (select
+							MB_EMAIL
+						from
+							AUTH_TB
+						where 
+							MB_EMAIL = #{email} and 
+							AUTH_KEY = #{authKey} and 
+							AUTH_TYPE = 30 and 
+							AUTH_EXPIRED = 'N')	
 	</update>	
 </mapper>

@@ -1,25 +1,24 @@
 package jsh.spring.project.domain.member.dto;
 
-//수정필요
 public class MemberPasswordChangeRequest {
-	private int id;
+	private int number;
 	private String password;
 	
 	public MemberPasswordChangeRequest() {
 		
 	}
 	
-	public MemberPasswordChangeRequest(int id, String password) {
-		this.id = id;
+	public MemberPasswordChangeRequest(int number, String password) {
+		this.number = number;
 		this.password = password;
 	}
 	
-	public int getId() {
-		return id;
+	public int getNumber() {
+		return number;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	public String getPassword() {
