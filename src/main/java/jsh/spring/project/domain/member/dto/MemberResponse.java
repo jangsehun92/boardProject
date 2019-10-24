@@ -1,20 +1,24 @@
 package jsh.spring.project.domain.member.dto;
 
+import java.sql.Date;
+
 public class MemberResponse {
 	private int number;
 	private String email;
 	private String nickname;
 	private String status;
+	private Date joinDate;
 	
 	public MemberResponse() {
 		
 	}
 	
-	public MemberResponse(int number, String email, String nickname, String status) {
+	public MemberResponse(int number, String email, String nickname, String status, Date joinDate) {
 		this.number = number;
 		this.email = email;
 		this.nickname = nickname;
 		this.status = status;
+		this.joinDate = joinDate;
 	}
 
 	public int getNumber() {
@@ -47,6 +51,14 @@ public class MemberResponse {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public Date getJoinDate() {
+		return joinDate;
+	}
+	
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
 	}
 	
 	public boolean checkStatus() {

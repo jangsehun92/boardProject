@@ -61,8 +61,8 @@ public class MemberApi {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, HttpSession session, LoginRequest dto) {
 		//view 단에서 정규식을 통해 영어로 보내도록 하자(비밀번호가 한글로 들어오니까 오류발생)
-		if(session.getAttribute("member") != null) {
-			session.removeAttribute("member");
+		if(session.getAttribute("memberResponse") != null) {
+			session.removeAttribute("memberResponse");
 		}
 		MemberResponse memberResponse = memberSearchService.signIn(dto);
 		
@@ -81,25 +81,28 @@ public class MemberApi {
 		return "memberPages/login";
 	}
 
-	// member 정보 보기(필요없을 듯함. 세션에 담겨있는 값으로만 표시해도 충분할듯[이메일,닉네임 정보])
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profile(HttpSession session, Model model) {
-		return "memberPages/profile";
+		if(session.getAttribute("member") != null) {
+			return "memberPages/profile";
+		}
+		return "memberPages/login";
 	}
 
-	// member정보 수정
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
-	public String profileUpdate(MemberProfileUpdateRequest dto) {
+	public String profileUpdate(HttpSession session, MemberProfileUpdateRequest dto) {
 		memberProfileService.updateProfile(dto);
-		
-		return "";
+		return "memberPages/profile";
 	}
 	
 	//member 비밀번호 변경
 	@RequestMapping(value = "/passwordChange", method = RequestMethod.POST)
-	public String passwordChange(MemberPasswordChangeRequest dto) {
+	public String passwordChange(HttpSession session, MemberPasswordChangeRequest dto) {
 		memberProfileService.changePassword(dto);
-		return "";
+		if(session.getAttribute("memberResponse") == null) {
+			session.invalidate();
+		}
+		return "memberRages/login";
 	}
 	
 

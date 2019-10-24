@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<!-- resultMap 작성해줘야함 -->
 <mapper namespace="member">	
 
 	<resultMap id="memberResultMap" type="MemberResponse">
@@ -8,6 +7,7 @@
 		<result property="email" column="mb_email"/>
 		<result property="nickname" column="mb_nickname"/>
 		<result property="status" column="mb_status"/>
+		<result property="joinDate" column="mb_reg_date" />
 	</resultMap>
 	
 	<select id="login" parameterType="LoginRequest" resultMap="memberResultMap">
@@ -15,7 +15,8 @@
 			MB_NO,
 			MB_EMAIL,
 			MB_NICKNAME,
-			MB_STATUS
+			MB_STATUS,
+			MB_REG_DATE
 		from 
 			MEMBER_TB
 		where 
