@@ -1,6 +1,7 @@
 package jsh.spring.project.domain.member.dto;
 
 public class MemberProfileUpdateRequest {
+	private int number;
 	private String email;
 	private String nickname;
 	
@@ -8,9 +9,18 @@ public class MemberProfileUpdateRequest {
 		
 	}
 	
-	public MemberProfileUpdateRequest(String email, String nickname) {
+	public MemberProfileUpdateRequest(int number, String email, String nickname) {
+		this.number = number;
 		this.email = email;
 		this.nickname = nickname;
+	}
+	
+	public int getNumber() {
+		return number;
+	}
+	
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	public String getEmail() {

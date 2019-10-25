@@ -13,11 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <body>
-<script type="text/javascript">
-function check_form(){
-	
-}
-</script>
+
 <div class="container" style="margin-top: 80px;">
 		<div class="col-md-6 main-block-left" style="align-items: center;">
 			<div class="panel panel-default" style="color: #ddd;" >
@@ -27,8 +23,7 @@ function check_form(){
 					</h5>
 				</div>
 				<div class="panel-body" style="text-align: left;">
-					이메일 : ${memberResponse.email } <br>
-					가입날짜 : ${memberResponse.joinDate }
+				쓴 글 내역
 				</div>
 			</div>
 		</div>

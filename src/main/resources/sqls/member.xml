@@ -2,12 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="member">	
 
-	<resultMap id="memberResultMap" type="MemberResponse">
+	<resultMap id="memberResultMap" type="Member">
 		<result property="number" column="mb_no"/>
 		<result property="email" column="mb_email"/>
 		<result property="nickname" column="mb_nickname"/>
 		<result property="status" column="mb_status"/>
 		<result property="joinDate" column="mb_reg_date" />
+	</resultMap>
+	
+	<resultMap id="memberResponseResultMap" type="MemberResponse">
+		<result property="nickname" column="mb_nickname"/>
 	</resultMap>
 	
 	<select id="login" parameterType="LoginRequest" resultMap="memberResultMap">
@@ -21,5 +25,14 @@
 			MEMBER_TB
 		where 
 			MB_EMAIL = #{email} and MB_PASSWORD = #{password}
+	</select>	
+	
+	<select id="search" parameterType="int" resultMap="memberResponseResultMap">
+		select
+			MB_NICKNAME
+		from 
+			MEMBER_TB
+		where 
+			MB_NO = #{number}
 	</select>	
 </mapper>

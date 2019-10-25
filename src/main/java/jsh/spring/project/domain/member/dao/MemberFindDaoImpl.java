@@ -3,6 +3,7 @@ package jsh.spring.project.domain.member.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import jsh.spring.project.domain.member.domain.Member;
 import jsh.spring.project.domain.member.dto.LoginRequest;
 import jsh.spring.project.domain.member.dto.MemberResponse;
 
@@ -16,8 +17,13 @@ public class MemberFindDaoImpl implements MemberFindDao{
 	}
 	
 	@Override
-	public MemberResponse login(LoginRequest dto) {
+	public Member login(LoginRequest dto) {
 		return sqlSession.selectOne("member.login", dto);
+	}
+
+	@Override
+	public MemberResponse search(int number) {
+		return sqlSession.selectOne("member.search", number);
 	}
 
 }

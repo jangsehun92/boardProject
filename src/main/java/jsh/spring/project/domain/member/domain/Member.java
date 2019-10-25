@@ -3,61 +3,70 @@ package jsh.spring.project.domain.member.domain;
 import java.sql.Date;
 
 public class Member {
-	private int memberNumber;
-	private String memberEmail;
-	private String memberPassword;
-	private String memberNickname;
-	private String memberStatus;
-	private Date memberRegisterDate;
+	private int number;
+	private String email;
+	private String nickname;
+	private String status;
+	private Date joinDate;
 	
 	public Member() {
 		
 	}
-	public Member(int memberNumber, String memberEmail, String memberPassword, String memberNickname, String memberStatus, Date memberRegisterDate) {
-		this.memberNumber = memberNumber;
-		this.memberEmail = memberEmail;
-		this.memberPassword = memberPassword;
-		this.memberNickname = memberNickname;
-		this.memberStatus = memberStatus;
-		this.memberRegisterDate = memberRegisterDate;
+	
+	public Member(int number, String email, String nickname, String status, Date joinDate) {
+		this.number = number;
+		this.email = email;
+		this.nickname = nickname;
+		this.status = status;
+		this.joinDate = joinDate;
 	}
-	public int getMemberNumber() {
-		return memberNumber;
+
+	public int getNumber() {
+		return number;
 	}
-	public void setMemberNumber(int memberNumber) {
-		this.memberNumber = memberNumber;
+
+	public void setNumber(int number) {
+		this.number = number;
 	}
-	public String getMemberEmail() {
-		return memberEmail;
+
+	public String getEmail() {
+		return email;
 	}
-	public void setMemberEmail(String memberEmail) {
-		this.memberEmail = memberEmail;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getMemberPassword() {
-		return memberPassword;
+
+	public String getNickname() {
+		return nickname;
 	}
-	public void setMemberPassword(String memberPassword) {
-		this.memberPassword = memberPassword;
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
-	public String getMemberNickname() {
-		return memberNickname;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setMemberNickname(String memberNickname) {
-		this.memberNickname = memberNickname;
-	}
-	public String getMemberStatus() {
-		return memberStatus;
-	}
-	public void setMemberStatus(String memberStatus) {
-		this.memberStatus = memberStatus;
-	}
-	public Date getMemberRegisterDate() {
-		return memberRegisterDate;
-	}
-	public void setMemberRegisterDate(Date memberRegisterDate) {
-		this.memberRegisterDate = memberRegisterDate;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
+	public Date getJoinDate() {
+		return joinDate;
+	}
+	
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
+	
+	public boolean checkStatus() {
+		if(status.equals("Y")) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 }
