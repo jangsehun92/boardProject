@@ -13,6 +13,27 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <body>
+<script type="text/javascript">
+//유효성 검사
+function check_form(){
+	//replace 로 공백 제거
+	var email = $("#email").val().replace(/\s|/gi,'');
+	var password = $("#password").val().replace(/\s|/gi,'');
+	
+	if(email==""){
+		alert("비밀번호를 입력해주세요.");
+		$("#password").focus();
+		return false;
+	}
+	
+	if(password==""){
+		alert("비밀번호를 입력해주세요.");
+		$("#password").focus();
+		return false;
+	}
+
+}
+</script>
 	<div class="container" style="margin-top: 80px; align-items: center;">
 		<div class="col-md-6 main-block-center">
 			<div class="panel panel-default">

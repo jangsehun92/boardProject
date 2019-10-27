@@ -1,14 +1,24 @@
 package jsh.spring.project.domain.member.dto;
 
 public class MemberResponse {
+	private String email;
 	private String nickname;
 	
 	public MemberResponse() {
 		
 	}
 	
-	public MemberResponse(String nickname) {
+	public MemberResponse(String email, String nickname) {
+		this.email = email;
 		this.nickname = nickname;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getNickname() {

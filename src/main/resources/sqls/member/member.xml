@@ -11,6 +11,7 @@
 	</resultMap>
 	
 	<resultMap id="memberResponseResultMap" type="MemberResponse">
+		<result property="email" column="mb_email"/>
 		<result property="nickname" column="mb_nickname"/>
 	</resultMap>
 	
@@ -29,6 +30,7 @@
 	
 	<select id="search" parameterType="int" resultMap="memberResponseResultMap">
 		select
+			MB_EMAIL,
 			MB_NICKNAME
 		from 
 			MEMBER_TB

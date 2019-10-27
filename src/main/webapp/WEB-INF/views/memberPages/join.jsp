@@ -14,21 +14,50 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <body>
 <script type="text/javascript">
+$(document).ready(function(){
+	$('#email').css("ime-mode", "disabled");
+	$('#password').css("ime-mode", "disabled");
+	$('#passwordCheck').css("ime-mode", "disabled");
+});
 //유효성 검사
 function check_form(){
 	//replace 로 공백 제거
 	var email = $("#email").val().replace(/\s|/gi,'');
+	var emailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	var password = $("#password").val().replace(/\s|/gi,'');
+	var passwordCheck = $("#passwordCheck").val().replace(/\s|/gi,'');
 	var nickname = $("#nickname").val().replace(/\s|/gi,'');
 	
-	if(email==""){
+	if(email=="") {
 		alert("이메일을 입력해주세요.");
 		$("#email").focus();
 		return false;
 	}
 	
-	if(password==""){
+	if (!emailCheck.test(email)) {
+		alert("email 형식에 맞지않습니다.");
+		return false;
+	}
+	
+	if(password=="") {
 		alert("비밀번호를 입력해주세요.");
+		$("#password").focus();
+		return false;
+	}
+	
+	if(!/^[a-zA-Z0-9]{8,20}$/.test(password)) { 
+        alert('비밀번호는 숫자와 영문자 조합으로 8~20자를 사용해야 합니다.'); 
+        return false;
+    }
+
+	if(passwordCheck==""){
+		alert("비밀번호를 재입력해주세요.");
+		$("#passwordCheck").focus();
+		return false;
+	}
+	
+	if(password != passwordCheck){
+		alert("비밀번호가 일치하지 않습니다.");
 		$("#password").focus();
 		return false;
 	}
@@ -51,9 +80,11 @@ function check_form(){
 				</div>
 				<form method="post" action="/member/register" class="form-signup form-user panel-body" onsubmit="return check_form();">
 					<fieldset>
-						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" style="margin-top: 10px;">
+						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" maxlength="30" style="margin-top: 10px;">
 						
 						<input type="password" class="form-control input-sm" id="password" name="password" placeholder="비밀번호" style="margin-top: 10px;">
+						
+						<input type="password" class="form-control input-sm" id="passwordCheck" placeholder="비밀번호 확인" style="margin-top: 10px;">
 						
 						<input type="text" class="form-control input-sm" id="nickname" name="nickname" placeholder="닉네임" style="margin-top: 10px;">
 					</fieldset>

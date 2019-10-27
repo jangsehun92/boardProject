@@ -55,7 +55,9 @@ $(function(){
 						</c:when>
 
 						<c:otherwise>
-							<li class="list-group-item"><span>${ member.nickname}</span> </li>
+							<li class="button"><a href="/member/info/${member.number }">${ member.nickname}</a></li>
+							<li class="button"><a href="/member/edit">정보수정</a></li>
+							<li class="button"><a href="/member/logout">로그아웃</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

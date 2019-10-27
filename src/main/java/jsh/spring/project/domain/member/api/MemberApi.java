@@ -90,35 +90,41 @@ public class MemberApi {
 		return "memberPages/info";
 	}
 	
-	//GET /member/edit 요청이 들어오면 [ session에 member객체가 있는지 확인 ] 후 updateProfile.jsp로 보내준다.
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String profileUpdate(HttpSession session) {
-		//1. session에서 number를 찾아와 memberResponse를 해준다.
+	public String profileUpdate() {
 		return "memberPages/updateProfile";
 	}
 	
-	
-	//POST /member/edit 요청이 들어오면 요청 객체를 이용하여 DB에 UPDATE 해준다.
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String profileUpdate(HttpSession session, MemberProfileUpdateRequest dto) {
-		//memberProfileUpdateRequest 객체에는 email,nickname만 있고 number는 session에서 가져오자
-		//1. session check(null)
-		//2. session getNumber(memberNO)
-		//3. session에서 체크 후 가져온 값을 기준으로 요청객체를 이용하여 update
-		//4. session에서 체크 후 가져온 값으로 memberResponse
+		Member member = (Member)session.getAttribute("member");
+		dto.setNumber(member.getNumber());
+		memberProfileService.updateProfile(dto);
+		
+		member.setEmail(dto.getEmail());
+		member.setNickname(dto.getNickname());
+		
+		session.removeAttribute("member");
+		session.setAttribute("member", member);
 		return "memberPages/updateProfile";
 	}
 	
-	
-	//member 비밀번호 변경
+	@RequestMapping(value = "/passwordChange", method = RequestMethod.GET)
+	public String passwordChange() {
+		return "memberPages/passwordChange";
+	}
+		
 	@RequestMapping(value = "/passwordChange", method = RequestMethod.POST)
 	public String passwordChange(HttpSession session, MemberPasswordChangeRequest dto) {
+		Member member = (Member)session.getAttribute("member");
+		logger.info("before 해당 회원 번호 : " + dto.getNumber());
+		logger.info("기존 비밀번호 : " + dto.getPassword());
+		logger.info("새 비밀번호 : " + dto.getNewPassword());
+		
+		dto.setNumber(member.getNumber());
+		logger.info("after 해당 회원 번호 : " + dto.getNumber());
 		memberProfileService.changePassword(dto);
-		if(session.getAttribute("memberResponse") == null) {
-			session.invalidate();
-		}
-		return "memberRages/login";
+		session.invalidate();
+		return "memberPages/login";
 	}
-	
-
 }

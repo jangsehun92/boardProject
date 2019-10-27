@@ -1,16 +1,16 @@
 package jsh.spring.project.domain.member.dto;
 
+import jsh.spring.project.global.util.PasswordSecurityUtil;
+
 public class MemberPasswordChangeRequest {
 	private int number;
 	private String password;
+	private String newPassword;
 	
-	public MemberPasswordChangeRequest() {
-		
-	}
-	
-	public MemberPasswordChangeRequest(int number, String password) {
-		this.number = number;
-		this.password = password;
+	public MemberPasswordChangeRequest(String password, String newPassword) throws Exception {
+		PasswordSecurityUtil passwordSecurityUtil = new PasswordSecurityUtil();
+		this.password = passwordSecurityUtil.encryptPassword(password);
+		this.newPassword = passwordSecurityUtil.encryptPassword(newPassword);
 	}
 	
 	public int getNumber() {
@@ -25,8 +25,8 @@ public class MemberPasswordChangeRequest {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public String getNewPassword() {
+		return newPassword;
 	}
 	
 }

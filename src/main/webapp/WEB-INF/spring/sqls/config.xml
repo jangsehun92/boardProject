@@ -16,10 +16,10 @@
 	
 	<!-- mapper의 위치를 잡아준다. -->
 	<mappers>
-		<mapper resource="/sqls/member.xml"/>
-		<mapper resource="/sqls/memberRegister.xml"/>
-		<mapper resource="/sqls/memberSupport.xml"/>
-		<mapper resource="/sqls/authRegister.xml"/>
+		<mapper resource="/sqls/member/member.xml"/>
+		<mapper resource="/sqls/member/memberRegister.xml"/>
+		<mapper resource="/sqls/member/memberSupport.xml"/>
+		<mapper resource="/sqls/member/authRegister.xml"/>
 	</mappers>
 
 </configuration>

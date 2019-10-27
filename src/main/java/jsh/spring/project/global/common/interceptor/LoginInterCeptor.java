@@ -1,4 +1,4 @@
-package jsh.spring.project.global.common;
+package jsh.spring.project.global.common.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import jsh.spring.project.domain.member.dto.MemberResponse;
+import jsh.spring.project.domain.member.domain.Member;
 
 public class LoginInterCeptor extends HandlerInterceptorAdapter{
 	
@@ -18,10 +18,10 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		logger.info("Controller 요청 전 interceptor preHandel 진입");
 		HttpSession session = request.getSession();
-		MemberResponse memberResponse = (MemberResponse)session.getAttribute("memberResponse");
+		Member member = (Member)session.getAttribute("member");
 		
-		if(memberResponse == null) {
-			response.sendRedirect("member/login");
+		if(member == null) {
+			response.sendRedirect("/login");
 			return false;
 		}
 		return true;

@@ -15,8 +15,11 @@
 <body>
 
 <div class="container" style="margin-top: 80px;">
-		<div class="col-md-6 main-block-left" style="align-items: center;">
-			<div class="panel panel-default" style="color: #ddd;" >
+		<div>
+			
+		</div>
+		<div class="col-md-6 main-block-center" style="align-items: center;">
+			<div class="panel panel-default" style="color: #2e6da4;" >
 				<div class="panel-heading">
 					<h5 class="panel-header" style="text-align: center;">
 						${memberResponse.nickname }

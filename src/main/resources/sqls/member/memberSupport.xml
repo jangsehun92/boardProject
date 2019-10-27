@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberSupport">
+	<update id="profileUpdate" parameterType="MemberProfileUpdateRequest">
+		update 
+			MEMBER_TB
+		set
+			MB_EMAIL = #{email},
+			MB_NICKNAME = #{nickname}
+		where
+			MB_NO = #{number}
+	
+	</update>	
+	
+	<update id="passwordChange" parameterType="MemberPasswordChangeRequest">
+		update
+			MEMBER_TB
+		set
+			MB_PASSWORD = #{newPassword}
+		where
+			MB_NO = #{number} and 
+			MB_PASSWORD = #{password}
+	</update>	
+</mapper>
