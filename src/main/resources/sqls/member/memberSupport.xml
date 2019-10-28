@@ -8,7 +8,7 @@
 			MB_EMAIL = #{email},
 			MB_NICKNAME = #{nickname}
 		where
-			MB_NO = #{number}
+			MB_ID = #{id}
 	
 	</update>	
 	
@@ -18,7 +18,7 @@
 		set
 			MB_PASSWORD = #{newPassword}
 		where
-			MB_NO = #{number} and 
+			MB_id = #{id} and 
 			MB_PASSWORD = #{password}
 	</update>	
 </mapper>

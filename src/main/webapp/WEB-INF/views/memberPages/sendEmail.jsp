@@ -24,7 +24,7 @@
 			<div class="details">
 				<h3>이메일 정보 : ${email }</h3>
 				<p>
-					<a href="/member/resendEmail/${email }">인증 이메일 재발송</a>
+					<a href="/member/resendEmail">인증 이메일 재발송</a>
 				</p>
 			</div>
 		</div>

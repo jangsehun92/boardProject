@@ -14,14 +14,17 @@ public class MemberRepositoryImpl implements MemberRepository {
 		this.sqlSession = sqlSession;
 	}
 
+	@Override
 	public int checkEmail(String email) {
 		return sqlSession.selectOne("register.checkEmail", email);
 	}
 
+	@Override
 	public int save(RegisterRequest dto) {
 		return sqlSession.insert("register.save", dto);
 	}
 	
+	@Override
 	public int updateStatus(RegisterConfirmRequest dto) {
 		return sqlSession.update("register.updateStatus", dto);
 	}

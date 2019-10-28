@@ -26,12 +26,19 @@ function check_form(){
 		$("#password").focus();
 		return false;
 	}
+
 	
 	if(newPassword==""){
 		alert("새 비밀번호를 입력해주세요.");
 		$("#newPassword").focus();
 		return false;
 	}
+	
+
+	if(!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(newPassword)) { 
+        alert('비밀번호는 [소,대문자/숫자/특수문자] 조합으로 8~20자를 사용해야 합니다.'); 
+        return false;
+    }
 	
 	if(newPasswordCheck==""){
 		alert("새 비밀번호 확인을 입력해주세요.");

@@ -21,7 +21,7 @@ function check_form(){
 	var password = $("#password").val().replace(/\s|/gi,'');
 	
 	if(email==""){
-		alert("비밀번호를 입력해주세요.");
+		alert("이메일을 입력해주세요.");
 		$("#password").focus();
 		return false;
 	}
@@ -42,7 +42,7 @@ function check_form(){
 						아이디 로그인
 					</h5>
 				</div>
-				<form class="form-signup form-user panel-body" method="post" action="/member/login">
+				<form class="form-signup form-user panel-body" method="post" action="/member/login" onsubmit="return check_form();">
 					<fieldset>
 						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일">
 						

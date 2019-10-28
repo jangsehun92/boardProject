@@ -3,7 +3,7 @@ package jsh.spring.project.domain.member.dto;
 import jsh.spring.project.global.util.PasswordSecurityUtil;
 
 public class MemberPasswordChangeRequest {
-	private int number;
+	private int id;
 	private String password;
 	private String newPassword;
 	
@@ -13,12 +13,12 @@ public class MemberPasswordChangeRequest {
 		this.newPassword = passwordSecurityUtil.encryptPassword(newPassword);
 	}
 	
-	public int getNumber() {
-		return number;
+	public int getId() {
+		return id;
 	}
 	
-	public void setNumber(int number) {
-		this.number = number;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getPassword() {

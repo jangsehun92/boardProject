@@ -3,7 +3,7 @@ package jsh.spring.project.domain.member.domain;
 import java.sql.Date;
 
 public class Member {
-	private int number;
+	private int id;
 	private String email;
 	private String nickname;
 	private String status;
@@ -13,20 +13,20 @@ public class Member {
 		
 	}
 	
-	public Member(int number, String email, String nickname, String status, Date joinDate) {
-		this.number = number;
+	public Member(int id, String email, String nickname, String status, Date joinDate) {
+		this.id = id;
 		this.email = email;
 		this.nickname = nickname;
 		this.status = status;
 		this.joinDate = joinDate;
 	}
 
-	public int getNumber() {
-		return number;
+	public int getId() {
+		return id;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getEmail() {

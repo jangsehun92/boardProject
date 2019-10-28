@@ -24,13 +24,10 @@ import jsh.spring.project.domain.member.service.MemberSearchService;
 @Controller
 @RequestMapping("/member")
 public class MemberApi {
-	
 	private static final Logger logger = LoggerFactory.getLogger(MemberApi.class);
 	
 	private final MemberRegisterService memberRegisterService;
-	
 	private final MemberSearchService memberSearchService;
-	
 	private final MemberProfileService memberProfileService;
 	
 	public MemberApi(MemberRegisterService memberRegisterService, MemberSearchService memberSearchService, MemberProfileService memberProfileService) {
@@ -52,28 +49,25 @@ public class MemberApi {
 		return "memberPages/login";
 	}
 	
-	@RequestMapping(value = "resendEmail/{email:.+}", method = RequestMethod.GET)
-	public String resendEmail(Model model, @PathVariable("email") String email) throws Exception {
+	@RequestMapping(value = "/resendEmail/{email:.+}", method = RequestMethod.GET)
+	public String resendEmail(Model model, String email) throws Exception {
 		memberRegisterService.resendEmail(email);
-		model.addAttribute("email", email);
 		return "memberPages/sendEmail";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, HttpSession session, LoginRequest dto) {
-		//view 단에서 정규식을 통해 영어로 보내도록 하자(비밀번호가 한글로 들어오니까 오류발생)
 		if(session.getAttribute("member") != null) {
 			session.removeAttribute("member");
 		}
 		Member member = memberSearchService.signIn(dto);
 		
-		if(member.checkStatus()) {
-			session.setAttribute("member", member);
-			return "home";
+		if(!member.checkStatus()) {
+			model.addAttribute("email", member.getEmail());
+			return "memberPages/sendEmail";
 		}
-		
-		model.addAttribute("email", member.getEmail());
-		return "memberPages/sendEmail";
+		session.setAttribute("member", member);
+		return "home";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -98,7 +92,7 @@ public class MemberApi {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String profileUpdate(HttpSession session, MemberProfileUpdateRequest dto) {
 		Member member = (Member)session.getAttribute("member");
-		dto.setNumber(member.getNumber());
+		dto.setId(member.getId());
 		memberProfileService.updateProfile(dto);
 		
 		member.setEmail(dto.getEmail());
@@ -117,12 +111,12 @@ public class MemberApi {
 	@RequestMapping(value = "/passwordChange", method = RequestMethod.POST)
 	public String passwordChange(HttpSession session, MemberPasswordChangeRequest dto) {
 		Member member = (Member)session.getAttribute("member");
-		logger.info("before 해당 회원 번호 : " + dto.getNumber());
+		logger.info("before 해당 회원 번호 : " + dto.getId());
 		logger.info("기존 비밀번호 : " + dto.getPassword());
 		logger.info("새 비밀번호 : " + dto.getNewPassword());
 		
-		dto.setNumber(member.getNumber());
-		logger.info("after 해당 회원 번호 : " + dto.getNumber());
+		dto.setId(member.getId());
+		logger.info("after 해당 회원 번호 : " + dto.getId());
 		memberProfileService.changePassword(dto);
 		session.invalidate();
 		return "memberPages/login";

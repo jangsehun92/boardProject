@@ -39,9 +39,9 @@ function check_form(){
 				<form method="post" action="/member/edit" class="form-signup form-user panel-body" onsubmit="return check_form();">
 					<fieldset>	
 						<p style="margin: 0px 0px 10px;">이메일 주소</p>
-						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" value="${member.email }" style="margin-top: 10px; mar" >
+						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" value="${member.email }" maxlength="30" style="margin-top: 10px; mar" >
 						<p style="margin: 10px 0px 10px;">닉네임</p>
-						<input type="text" class="form-control input-sm" id="nickname" name="nickname" placeholder="닉네임" value="${member.nickname }" style="margin-top: 10px;">
+						<input type="text" class="form-control input-sm" id="nickname" name="nickname" placeholder="닉네임" value="${member.nickname }" maxlength="10" style="margin-top: 10px;">
 					</fieldset>
 					<input type="submit" class="btn btn-primary btn-block" value="정보 수정" style="margin-top: 10px;">
 					<input type="button" class="btn btn-primary btn-block" value="비밀번호 변경" style="margin-top: 10px;" onclick="location.href='passwordChange'">

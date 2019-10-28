@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="member">	
+<mapper namespace="memberFindMapper">	
 
 	<resultMap id="memberResultMap" type="Member">
 		<result property="id" column="mb_id"/>
@@ -17,7 +17,7 @@
 	
 	<select id="login" parameterType="LoginRequest" resultMap="memberResultMap">
 		select
-			MB_ID,
+			MB_NO,
 			MB_EMAIL,
 			MB_NICKNAME,
 			MB_STATUS,
@@ -35,6 +35,6 @@
 		from 
 			MEMBER_TB
 		where 
-			MB_id = #{id}
+			MB_NO = #{number}
 	</select>	
 </mapper>

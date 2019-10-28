@@ -13,15 +13,15 @@
 		)
 	</insert>
 	
-	<update id="expired" parameterType="String">
+	<update id="expired" parameterType="RegisterConfirmRequest">
 		update 
 			AUTH_TB
 		set 
 			AUTH_EXPIRED = 'Y',
 			AUTH_KEY = 'EXPIRE'
 		where 
-			mb_email = #{email} and
-			auth_key = #{authKey}
+			MB_EMAIL = #{email} and
+			AUTH_KEY = #{authKey}
 	</update>
 	
 	<update id="updateAuthKey" parameterType="RegisterConfirmRequest">

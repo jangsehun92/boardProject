@@ -1,42 +1,30 @@
 package jsh.spring.project.domain.member.dto;
 
 public class MemberProfileUpdateRequest {
-	private int number;
+	private int id;
 	private String email;
 	private String nickname;
 	
-	public MemberProfileUpdateRequest() {
-		
-	}
 	
-	public MemberProfileUpdateRequest(int number, String email, String nickname) {
-		this.number = number;
+	public MemberProfileUpdateRequest(String email, String nickname) {
 		this.email = email;
 		this.nickname = nickname;
 	}
 	
-	public int getNumber() {
-		return number;
+	public int getId() {
+		return id;
 	}
 	
-	public void setNumber(int number) {
-		this.number = number;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getNickname() {
 		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
 	}
 	
 }

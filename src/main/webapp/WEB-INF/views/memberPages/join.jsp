@@ -45,7 +45,7 @@ function check_form(){
 		return false;
 	}
 	
-	if(!/^[a-zA-Z0-9]{8,20}$/.test(password)) { 
+	if(!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(password)) { 
         alert('비밀번호는 숫자와 영문자 조합으로 8~20자를 사용해야 합니다.'); 
         return false;
     }
@@ -86,7 +86,7 @@ function check_form(){
 						
 						<input type="password" class="form-control input-sm" id="passwordCheck" placeholder="비밀번호 확인" style="margin-top: 10px;">
 						
-						<input type="text" class="form-control input-sm" id="nickname" name="nickname" placeholder="닉네임" style="margin-top: 10px;">
+						<input type="text" class="form-control input-sm" id="nickname" name="nickname" placeholder="닉네임" maxlength="10" style="margin-top: 10px;">
 					</fieldset>
 					<input type="submit" class="btn btn-primary btn-block" value="회원가입" style="margin-top: 10px;">
 				</form>
