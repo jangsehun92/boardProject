@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">	
+
+	<resultMap id="ArticleResultMap" type="Article">
+		<result property="id" column="id"/>
+		<result property="category" column="category"/>
+		<result property="writer" column="writer"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="regDate" column="reg_date" />
+	</resultMap>
+	
+	<select id = "totalCount" parameterType="String" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			board_tb 
+		WHERE category = #{category}
+	</select>
+	
+	<select id="list" parameterType="map" resultMap="ArticleResultMap">
+		<![CDATA[
+		SELECT 
+			b.rnum,
+			b.id, 
+			b.category,
+			b.writer, 
+			b.title, 
+			b.content, 
+			b.reg_date 
+		FROM
+			(SELECT
+				rownum AS rnum, 
+				a.id, 
+				a.category,
+				a.writer, 
+				a.title, 
+				a.content, 
+				a.reg_date 
+			FROM 
+				(SELECT 
+					id, 
+					category,
+					member_tb.mb_nickname AS writer, 
+					title, 
+					content, 
+					reg_date 
+				FROM 
+					board_tb 
+					JOIN member_tb 
+						ON board_tb.mb_id = member_tb.mb_id 
+				WHERE category = #{category}
+			ORDER BY id DESC)a
+			WHERE 
+				rownum <= #{page} * #{countList} )b
+		where 
+			b.rnum >= (#{page}-1) * #{countList}+1
+		]]>
+	</select>
+	
+</mapper>

@@ -43,8 +43,8 @@ $(function(){
 	</div>
 	<div id="navbar" class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
-		<li id="community"><a href="/boards/community">커뮤니티</a></li>
-		<li id="questions"><a href="/boards/questions">질문</a></li>
+		<li id="community"><a href="/articles/community">커뮤니티</a></li>
+		<li id="questions"><a href="/articles/questions">질문</a></li>
 		<li><hr></li>
 	  </ul>
 	  <ul class="nav navbar-nav navbar-right">
