@@ -1,5 +1,8 @@
 package jsh.spring.project.domain.member.api;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -104,21 +107,22 @@ public class MemberApi {
 	}
 	
 	@RequestMapping(value = "/passwordChange", method = RequestMethod.GET)
-	public String passwordChange() {
+	public String passwordChange() throws IOException {
 		return "memberPages/passwordChange";
 	}
 		
 	@RequestMapping(value = "/passwordChange", method = RequestMethod.POST)
-	public String passwordChange(HttpSession session, MemberPasswordChangeRequest dto) {
+	public String passwordChange(HttpSession session, HttpServletResponse response, MemberPasswordChangeRequest dto) throws IOException {
 		Member member = (Member)session.getAttribute("member");
-		logger.info("before 해당 회원 번호 : " + dto.getId());
-		logger.info("기존 비밀번호 : " + dto.getPassword());
-		logger.info("새 비밀번호 : " + dto.getNewPassword());
-		
 		dto.setId(member.getId());
-		logger.info("after 해당 회원 번호 : " + dto.getId());
+		
+		if(!memberProfileService.changePassword(dto)) {
+			return "memberPages/passwordChange";
+		}
+		
 		memberProfileService.changePassword(dto);
 		session.invalidate();
 		return "memberPages/login";
 	}
+
 }

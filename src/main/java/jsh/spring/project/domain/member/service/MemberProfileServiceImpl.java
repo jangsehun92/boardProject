@@ -21,8 +21,12 @@ public class MemberProfileServiceImpl implements MemberProfileService{
 	}
 
 	@Override
-	public void changePassword(MemberPasswordChangeRequest dto) {
-		memberSupportRepository.changePassword(dto);
+	public boolean changePassword(MemberPasswordChangeRequest dto) {
+		if(memberSupportRepository.changePassword(dto)==0) {
+			return false;
+		}
+		//memberSupportRepository.changePassword(dto);
+		return true;
 	}
 
 }
