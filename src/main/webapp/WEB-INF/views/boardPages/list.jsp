@@ -30,7 +30,6 @@
 		
 			<thead>
 				<tr>
-					<td class="col-md-2"><b>번호</b></td> 
 					<td class="col-md-3"><b>제목</b></td> 
 					<td class="col-md-6" align="right"><b>작성자</b></td>
 					<td class="col-md-1" align="right"><b>작성 날짜</b></td> 
@@ -49,7 +48,6 @@
 					
 					<c:forEach items="${articleList }" var="article">
 						<tr>
-							<td>${article.id }</td>
 							<td><a href="/article/${article.id }">${article.title }</a></td>
 							<td align="right">${article.writer }</td>
 							<td align="right">${article.regDate }</td>
@@ -63,7 +61,7 @@
 					<a href="/articles/${category }/create" class="btn btn-primary">글쓰기</a>
 		</div>
 		<div>
-		<nav aria-label="..." style="text-align: center;">
+			<nav aria-label="..." style="text-align: center;">
 					<ul class="pagination" id="pagination"> </ul>
 			</nav>
 		</div>

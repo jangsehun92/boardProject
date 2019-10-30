@@ -22,17 +22,30 @@ public class BoardServiceImpl implements BoardService{
 	public int totalCount(String category) {
 		return boardRepository.totalCount(category);
 	}
+	
+	@Override
+	public int totalCount(int memberId) {
+		return boardRepository.totalCount(memberId);
+	}
 
 	@Override
 	public List<Article> articleList(String category, int page, int countList) {
 		Map<String,Object> paramMap = new HashMap<String,Object>();
-		
 		paramMap.put("category", category);
 		paramMap.put("page", page);
 		paramMap.put("countList", countList);
 		return boardRepository.articleList(paramMap);
 	}
-
+	
+	public List<Article> articleList(int memberId, int page, int countList) {
+		System.out.println("BoardServiceImpl articleList");
+		System.out.println("memberId : " + memberId + " page : " + page + " countList : " + countList);
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("memberId", countList);
+		paramMap.put("page", page);
+		paramMap.put("countList", countList);
+		return boardRepository.articleList(paramMap);
+	}
 	
 
 }

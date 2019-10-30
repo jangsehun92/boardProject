@@ -19,6 +19,14 @@
 		WHERE category = #{category}
 	</select>
 	
+	<select id = "totalCount_memberId" parameterType="int" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			board_tb 
+		WHERE mb_id = #{memberId}
+	</select>
+	
 	<select id="list" parameterType="map" resultMap="ArticleResultMap">
 		<![CDATA[
 		SELECT 
@@ -51,6 +59,46 @@
 					JOIN member_tb 
 						ON board_tb.mb_id = member_tb.mb_id 
 				WHERE category = #{category}
+			ORDER BY id DESC)a
+			WHERE 
+				rownum <= #{page} * #{countList} )b
+		where 
+			b.rnum >= (#{page}-1) * #{countList}+1
+		]]>
+	</select>
+	
+	<select id="list_memberId" parameterType="map" resultMap="ArticleResultMap">
+		<![CDATA[
+		SELECT 
+			b.rnum,
+			b.id, 
+			b.category,
+			b.writer, 
+			b.title, 
+			b.content, 
+			b.reg_date 
+		FROM
+			(SELECT
+				rownum AS rnum, 
+				a.id, 
+				a.category,
+				a.writer, 
+				a.title, 
+				a.content, 
+				a.reg_date 
+			FROM 
+				(SELECT 
+					id, 
+					category,
+					member_tb.mb_nickname AS writer, 
+					title, 
+					content, 
+					reg_date 
+				FROM 
+					board_tb 
+					JOIN member_tb 
+						ON board_tb.mb_id = member_tb.mb_id 
+				WHERE board_tb.mb_id = #{memberId}
 			ORDER BY id DESC)a
 			WHERE 
 				rownum <= #{page} * #{countList} )b

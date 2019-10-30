@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-
+$(document).ready(function(){
+    $('.dropdown-toggle').dropdown()
+});
 $(function(){
 	if($("#category").val()=="community"){
 		$("#main").append("<h3>커뮤니티</h3>");
@@ -33,7 +35,7 @@ $(function(){
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
 	<div class="navbar-header">
-	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 		<span class="sr-only">Toggle navigation</span>
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
@@ -56,13 +58,12 @@ $(function(){
 
 						<c:otherwise>
 							<li class="button"><a href="/member/info/${member.id }">${ member.nickname}</a></li>
-							<li class="button"><a href="/member/edit">정보수정</a></li>
-							<li class="button"><a href="/member/logout">로그아웃</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
 	</div><!--/.nav-collapse -->
   </div>
+  
 </nav>
 </body>
 </html>
