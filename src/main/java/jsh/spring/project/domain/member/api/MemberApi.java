@@ -1,6 +1,9 @@
 package jsh.spring.project.domain.member.api;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import jsh.spring.project.domain.board.domain.Article;
 import jsh.spring.project.domain.member.domain.Member;
 import jsh.spring.project.domain.member.dto.LoginRequest;
 import jsh.spring.project.domain.member.dto.MemberPasswordChangeRequest;
@@ -79,11 +84,15 @@ public class MemberApi {
 		return "memberPages/login";
 	}
 
-	@RequestMapping(value = "/info/{number}", method = RequestMethod.GET)
-	public String profile(HttpSession session, Model model, @PathVariable int number) {
-		MemberResponse memberResponse = memberSearchService.searchMember(number);
+	@RequestMapping(value = "/info/{memberId}", method = RequestMethod.GET)
+	public String profile(HttpSession session, Model model, @PathVariable("memberId")int memberId, @RequestParam(defaultValue="1")int page) {
+		logger.info("page value : " + page);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap = memberSearchService.searchMember(memberId, page);
+		MemberResponse memberResponse = (MemberResponse)resultMap.get("memberResponse");
+		List<Article> articleList = (List<Article>)resultMap.get("articleList");
 		model.addAttribute("memberResponse", memberResponse);
-		//게시판 service에서 사용자가 작성한 글을 가져와야한다.
+		model.addAttribute("articleList", articleList);
 		return "memberPages/info";
 	}
 	
