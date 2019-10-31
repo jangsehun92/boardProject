@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="memberFindMapper">	
+<mapper namespace="findMapper">	
 
 	<resultMap id="memberResultMap" type="Member">
 		<result property="id" column="mb_id"/>
@@ -11,13 +11,14 @@
 	</resultMap>
 	
 	<resultMap id="memberResponseResultMap" type="MemberResponse">
+		<result property="id" column="mb_id"/>
 		<result property="email" column="mb_email"/>
 		<result property="nickname" column="mb_nickname"/>
 	</resultMap>
 	
 	<select id="login" parameterType="LoginRequest" resultMap="memberResultMap">
 		select
-			MB_NO,
+			MB_ID,
 			MB_EMAIL,
 			MB_NICKNAME,
 			MB_STATUS,
@@ -30,11 +31,12 @@
 	
 	<select id="search" parameterType="int" resultMap="memberResponseResultMap">
 		select
+			MB_ID,
 			MB_EMAIL,
 			MB_NICKNAME
 		from 
 			MEMBER_TB
 		where 
-			MB_NO = #{number}
+			MB_ID = #{id}
 	</select>	
 </mapper>

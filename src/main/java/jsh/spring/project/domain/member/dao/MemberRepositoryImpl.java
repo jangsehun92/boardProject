@@ -16,22 +16,22 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int checkEmail(String email) {
-		return sqlSession.selectOne("register.checkEmail", email);
+		return sqlSession.selectOne("registerMapper.checkEmail", email);
 	}
 
 	@Override
 	public int save(RegisterRequest dto) {
-		return sqlSession.insert("register.save", dto);
+		return sqlSession.insert("registerMapper.save", dto);
 	}
 	
 	@Override
 	public int updateStatus(RegisterConfirmRequest dto) {
-		return sqlSession.update("register.updateStatus", dto);
+		return sqlSession.update("registerMapper.updateStatus", dto);
 	}
 
 	@Override
 	public int checkStatus(String email) {
-		return sqlSession.selectOne("register.checkStatus",email);
+		return sqlSession.selectOne("registerMapper.checkStatus",email);
 	}
 
 }

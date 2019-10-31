@@ -29,12 +29,7 @@ public class BoardRepositoryImpl implements BoardRepository{
 
 	@Override
 	public List<Article> articleList(Map<String, Object> paramMap) {
-		System.out.println(paramMap.get("memberId") + "로 articleList 가져오기");
 		if(paramMap.get("memberId") != null) {
-			System.out.println("boardRepository articleList");
-			System.out.println("memberId : " + paramMap.get("memberId"));
-			System.out.println("page : " + paramMap.get("page"));
-			System.out.println("countList : " + paramMap.get("countList"));
 			return sqlSession.selectList("boardMapper.list_memberId", paramMap);
 		}
 		return sqlSession.selectList("boardMapper.list", paramMap);

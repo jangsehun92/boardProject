@@ -18,12 +18,12 @@ public class MemberFindDaoImpl implements MemberFindDao{
 	
 	@Override
 	public Member login(LoginRequest dto) {
-		return sqlSession.selectOne("member.login", dto);
+		return sqlSession.selectOne("findMapper.login", dto);
 	}
 
 	@Override
 	public MemberResponse search(int number) {
-		return sqlSession.selectOne("member.search", number);
+		return sqlSession.selectOne("findMapper.search", number);
 	}
 
 }

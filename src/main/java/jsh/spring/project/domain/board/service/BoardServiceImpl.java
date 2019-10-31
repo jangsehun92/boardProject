@@ -38,10 +38,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	public List<Article> articleList(int memberId, int page, int countList) {
-		System.out.println("BoardServiceImpl articleList");
-		System.out.println("memberId : " + memberId + " page : " + page + " countList : " + countList);
 		Map<String,Object> paramMap = new HashMap<String,Object>();
-		paramMap.put("memberId", countList);
+		paramMap.put("memberId", memberId);
 		paramMap.put("page", page);
 		paramMap.put("countList", countList);
 		return boardRepository.articleList(paramMap);

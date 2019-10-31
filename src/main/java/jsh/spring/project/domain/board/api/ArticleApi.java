@@ -40,7 +40,6 @@ public class ArticleApi {
 	//READ
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String detail(Model model, @PathVariable("id") int id) {
-		//id를 기준으로 글 검색 후 model에 담에 detail로 보내준다.
 		Article article = articleService.detail(id);
 		model.addAttribute("article", article);
 		return "boardPages/detail";

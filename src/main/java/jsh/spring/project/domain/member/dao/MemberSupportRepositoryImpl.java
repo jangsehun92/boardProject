@@ -17,12 +17,12 @@ public class MemberSupportRepositoryImpl implements MemberSupportRepository{
 	
 	@Override
 	public int updateProfile(MemberProfileUpdateRequest dto) {
-		return sqlSession.update("memberSupport.profileUpdate",dto);
+		return sqlSession.update("supportMapper.profileUpdate",dto);
 	}
 
 	@Override
 	public int changePassword(MemberPasswordChangeRequest dto) {
-		return sqlSession.update("memberSupport.passwordChange", dto);
+		return sqlSession.update("supportMapper.passwordChange", dto);
 	}
 
 }

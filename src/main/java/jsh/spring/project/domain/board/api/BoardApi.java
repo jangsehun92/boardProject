@@ -17,7 +17,6 @@ import jsh.spring.project.global.common.request.Pagination;
 @Controller
 @RequestMapping("/articles")
 public class BoardApi {
-	
 	private static final Logger logger = LoggerFactory.getLogger(BoardApi.class);
 	
 	private final BoardService boardService;
@@ -29,11 +28,9 @@ public class BoardApi {
 	//카테고리 별 게시판리스트(LIST)
 	@RequestMapping(value = "/{category}", method = RequestMethod.GET)
 	public String list(HttpSession session, Model model, @PathVariable("category") String category, @RequestParam(defaultValue="1")int page) {
-		logger.info("/articles/"+category + "?page" +page);
 		int totalCount = boardService.totalCount(category);
 		Pagination pagination = new Pagination(totalCount, page);
 		int countList = pagination.getCountList();
-		
 		session.setAttribute("category", category);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("articleList", boardService.articleList(category, page, countList));

@@ -36,6 +36,7 @@ public class MemberSearchServiceImpl implements MemberSearchService{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("memberResponse", memberFindDao.search(memberId));
 		resultMap.put("articleList",boardService.articleList(memberId, page, pagination.getCountList()));
+		resultMap.put("pagination", pagination);
 		return resultMap;
 	}
 

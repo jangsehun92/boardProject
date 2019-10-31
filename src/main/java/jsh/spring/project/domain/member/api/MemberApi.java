@@ -28,6 +28,7 @@ import jsh.spring.project.domain.member.dto.RegisterRequest;
 import jsh.spring.project.domain.member.service.MemberProfileService;
 import jsh.spring.project.domain.member.service.MemberRegisterService;
 import jsh.spring.project.domain.member.service.MemberSearchService;
+import jsh.spring.project.global.common.request.Pagination;
 
 @Controller
 @RequestMapping("/member")
@@ -86,13 +87,16 @@ public class MemberApi {
 
 	@RequestMapping(value = "/info/{memberId}", method = RequestMethod.GET)
 	public String profile(HttpSession session, Model model, @PathVariable("memberId")int memberId, @RequestParam(defaultValue="1")int page) {
-		logger.info("page value : " + page);
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap = memberSearchService.searchMember(memberId, page);
-		MemberResponse memberResponse = (MemberResponse)resultMap.get("memberResponse");
-		List<Article> articleList = (List<Article>)resultMap.get("articleList");
-		model.addAttribute("memberResponse", memberResponse);
-		model.addAttribute("articleList", articleList);
+//		MemberResponse memberResponse = (MemberResponse)resultMap.get("memberResponse");
+//		List<Article> articleList = (List<Article>)resultMap.get("articleList");
+//		Pagination pagination = (Pagination)resultMap.get("pagination");
+//		model.addAttribute("memberResponse", memberResponse);
+//		model.addAttribute("articleList", articleList);
+//		model.addAttribute("pagination", pagination);
+		
+		model.addAttribute("resultMap",resultMap);
 		return "memberPages/info";
 	}
 	

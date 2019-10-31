@@ -14,11 +14,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <body>
 <script type="text/javascript">
-$(document).ready(function(){
-	$('#email').css("ime-mode", "disabled");
-	$('#password').css("ime-mode", "disabled");
-	$('#passwordCheck').css("ime-mode", "disabled");
-});
 //유효성 검사
 function check_form(){
 	//replace 로 공백 제거
@@ -75,12 +70,12 @@ function check_form(){
 			<div class="panel panel-default" style="color: #ddd;" >
 				<div class="panel-heading">
 					<h5 class="panel-header" style="text-align: center;">
-						이메일 회원가입
+						회원가입
 					</h5>
 				</div>
 				<form method="post" action="/member/register" class="form-signup form-user panel-body" onsubmit="return check_form();">
 					<fieldset>
-						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" maxlength="30" style="margin-top: 10px;">
+						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" maxlength="30" style="margin-top: 10px;" pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+$">
 						
 						<input type="password" class="form-control input-sm" id="password" name="password" placeholder="비밀번호" style="margin-top: 10px;">
 						

@@ -23,7 +23,7 @@
 	<!-- mapper의 위치를 잡아준다. -->
 	<mappers>
 		<!-- 회원 관련 -->
-		<mapper resource="/sqls/member/member.xml"/>
+		<mapper resource="/sqls/member/memberFind.xml"/>
 		<mapper resource="/sqls/member/memberRegister.xml"/>
 		<mapper resource="/sqls/member/memberSupport.xml"/>
 		<mapper resource="/sqls/member/authRegister.xml"/>
