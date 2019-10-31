@@ -11,20 +11,22 @@
 		<result property="regDate" column="reg_date" />
 	</resultMap>
 	
-	<select id = "totalCount" parameterType="String" resultType="int">
+	<select id = "totalCount" parameterType="map" resultType="int">
 		SELECT 
 			count(*)
 		FROM 
 			board_tb 
-		WHERE category = #{category}
-	</select>
-	
-	<select id = "totalCount_memberId" parameterType="int" resultType="int">
-		SELECT 
-			count(*)
-		FROM 
-			board_tb 
-		WHERE mb_id = #{memberId}
+		<choose>
+			<when test='countType != null and countType == "query"'>
+				WHERE title LIKE '%'||#{value}||'%'
+			</when>
+			<when test='countType != null and countType == "id"'>
+				WHERE mb_id = #{value}
+			</when>
+			<otherwise>
+				WHERE category = #{value}
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="list" parameterType="map" resultMap="ArticleResultMap">
@@ -58,47 +60,19 @@
 					board_tb 
 					JOIN member_tb 
 						ON board_tb.mb_id = member_tb.mb_id 
-				WHERE category = #{category}
-			ORDER BY id DESC)a
-			WHERE 
-				rownum <= #{page} * #{countList} )b
-		where 
-			b.rnum >= (#{page}-1) * #{countList}+1
 		]]>
-	</select>
-	
-	<select id="list_memberId" parameterType="map" resultMap="ArticleResultMap">
+				<choose>
+				  <when test='searchType != null and searchType == "query"'>
+				    WHERE title LIKE '%'||#{query}||'%'
+				  </when>
+				  <when test='searchType != null and searchType == "id"'>
+				    WHERE board_tb.mb_id = #{memberId}
+				  </when>
+				  <otherwise>
+				    WHERE category = #{category}
+				  </otherwise>
+				</choose>
 		<![CDATA[
-		SELECT 
-			b.rnum,
-			b.id, 
-			b.category,
-			b.writer, 
-			b.title, 
-			b.content, 
-			b.reg_date 
-		FROM
-			(SELECT
-				rownum AS rnum, 
-				a.id, 
-				a.category,
-				a.writer, 
-				a.title, 
-				a.content, 
-				a.reg_date 
-			FROM 
-				(SELECT 
-					id, 
-					category,
-					member_tb.mb_nickname AS writer, 
-					title, 
-					content, 
-					reg_date 
-				FROM 
-					board_tb 
-					JOIN member_tb 
-						ON board_tb.mb_id = member_tb.mb_id 
-				WHERE board_tb.mb_id = #{memberId}
 			ORDER BY id DESC)a
 			WHERE 
 				rownum <= #{page} * #{countList} )b
@@ -106,5 +80,4 @@
 			b.rnum >= (#{page}-1) * #{countList}+1
 		]]>
 	</select>
-	
 </mapper>

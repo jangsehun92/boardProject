@@ -132,16 +132,20 @@ function uxin_timestamp(time){
 			</li>
 			</ul>
 			<div class="row" style="margin-left: 0px; margin-right: 0px">
-				<div style="float: left">
+					<div style="float: left">
 					<a href="/articles/${article.category }" class="btn btn-primary">목록</a>
+					</div>
+					<div style="float: left">
 					<c:if test="${member.id eq article.memberId}">
 						<input type="button" class="btn btn-primary" value="수정" onclick="location.href='/article/edit/${article.id}'">
+						<div style="float: left">
 						<form method="post" action="/article/${article.id }">
 							<input type="hidden" name="_method" value="delete"/>
 							<input type="submit" class="btn btn-primary" value="삭제">
 						</form>
+						</div>
 					</c:if> 
-				</div>
+					</div>
 				<div style="float: right">
 					<input type="button" class="btn btn-primary" value="추천">
 					<input type="button" class="btn btn-primary" value="비추천">
@@ -149,11 +153,10 @@ function uxin_timestamp(time){
 			</div>
 			<hr>
 			
-			<!-- 
 			<div class="form-group shadow-textarea">
 			  	<label>댓글</label>
 			  	<form method="post" action="board_comment_insert" onsubmit="return comment_insert();">
-			  		<input id="board_comment_board_no" type="hidden" name="board_no" value="${boardDto.board_no }">
+			  		<input id="board_comment_board_no" type="hidden" name="board_no" value="">
 			  		<input id="board_comment_user_id" type="hidden" name="user_id" value="tester">
 			  		<textarea id="board_comment_content" name="board_comment_content" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" maxlength="1000" placeholder="댓글을 입력해주세요."></textarea>
 			  		<input type="button" class="pull-left btn btn-primary" value="새로고침" onclick="comment_list();">
@@ -163,7 +166,7 @@ function uxin_timestamp(time){
 			</div>
 			
 			<hr>
-			
+			<!-- 
 			<div>
 				<ul class="list-group" id="comment_list">
 					<c:choose>

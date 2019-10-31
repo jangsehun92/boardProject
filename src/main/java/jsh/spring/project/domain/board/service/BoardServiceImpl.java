@@ -1,6 +1,5 @@
 package jsh.spring.project.domain.board.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,29 +18,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int totalCount(String category) {
-		return boardRepository.totalCount(category);
+	public int totalCount(Map<String,Object> countParamMap) {
+		return boardRepository.totalCount(countParamMap);
 	}
 	
-	@Override
-	public int totalCount(int memberId) {
-		return boardRepository.totalCount(memberId);
-	}
-
-	@Override
-	public List<Article> articleList(String category, int page, int countList) {
-		Map<String,Object> paramMap = new HashMap<String,Object>();
-		paramMap.put("category", category);
-		paramMap.put("page", page);
-		paramMap.put("countList", countList);
-		return boardRepository.articleList(paramMap);
-	}
-	
-	public List<Article> articleList(int memberId, int page, int countList) {
-		Map<String,Object> paramMap = new HashMap<String,Object>();
-		paramMap.put("memberId", memberId);
-		paramMap.put("page", page);
-		paramMap.put("countList", countList);
+	public List<Article> articleList(Map<String,Object> paramMap) {
 		return boardRepository.articleList(paramMap);
 	}
 	

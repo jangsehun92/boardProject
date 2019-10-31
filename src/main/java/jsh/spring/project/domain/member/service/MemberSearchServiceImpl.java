@@ -29,13 +29,21 @@ public class MemberSearchServiceImpl implements MemberSearchService{
 
 	@Override
 	public Map<String, Object> searchMember(int memberId, int page) {
-		System.out.println("MemberSearchService searchMember");
-		System.out.println("memberId : " + memberId + " page : " + page);
-		int totalCount = boardService.totalCount(memberId);
-		Pagination pagination = new Pagination(totalCount, page);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("countType", "id");
+		paramMap.put("value", memberId);
+		int totalCount = boardService.totalCount(paramMap);
+		paramMap.clear();
+		Pagination pagination = new Pagination(totalCount, page);
+		
+		paramMap.put("searchType", "id");
+		paramMap.put("memberId", memberId);
+		paramMap.put("page", page);
+		paramMap.put("countList", pagination.getCountList());
+		
 		resultMap.put("memberResponse", memberFindDao.search(memberId));
-		resultMap.put("articleList",boardService.articleList(memberId, page, pagination.getCountList()));
+		resultMap.put("articleList",boardService.articleList(paramMap));
 		resultMap.put("pagination", pagination);
 		return resultMap;
 	}

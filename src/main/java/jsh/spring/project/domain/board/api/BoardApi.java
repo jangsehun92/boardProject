@@ -1,5 +1,8 @@
 package jsh.spring.project.domain.board.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -25,23 +28,39 @@ public class BoardApi {
 		this.boardService = boardService;
 	}
 	
-	//카테고리 별 게시판리스트(LIST)
+	//카테고리 별 게시판리스트(LIST) & 검색
 	@RequestMapping(value = "/{category}", method = RequestMethod.GET)
-	public String list(HttpSession session, Model model, @PathVariable("category") String category, @RequestParam(defaultValue="1")int page) {
-		int totalCount = boardService.totalCount(category);
+	public String list(HttpSession session, Model model, @PathVariable("category") String category, @RequestParam(required = false, defaultValue="1")int page, @RequestParam(required = false)String query) {
+		session.setAttribute("category", category);
+		Map<String, Object> paramMap = new HashMap<String,Object>();
+		Map<String, Object> countParamMap = new HashMap<String,Object>();
+		
+		if(query != null) {
+			countParamMap.put("countType","query");
+			countParamMap.put("value",query);
+			paramMap.put("searchType","query");
+			paramMap.put("query",query);
+			model.addAttribute("query",query);
+		}else {
+			countParamMap.put("countType","category");
+			countParamMap.put("value",category);
+			paramMap.put("searchType", "category");
+			paramMap.put("category",category);
+		}
+		int totalCount = boardService.totalCount(countParamMap);
 		Pagination pagination = new Pagination(totalCount, page);
 		int countList = pagination.getCountList();
-		session.setAttribute("category", category);
+		
+		paramMap.put("page",page);
+		paramMap.put("countList",countList);
+		
+		model.addAttribute("articleList", boardService.articleList(paramMap));
 		model.addAttribute("pagination", pagination);
-		model.addAttribute("articleList", boardService.articleList(category, page, countList));
 		return "boardPages/list";
 	}
 	
-	//글작성(CREATE) 요청
 	@RequestMapping(value = "/{category}/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		return "boardPages/create";
 	}
-	
-	//글검색
 }

@@ -6,8 +6,7 @@ import java.util.Map;
 import jsh.spring.project.domain.board.domain.Article;
 
 public interface BoardRepository {
-	public int totalCount(String category);
-	public int totalCount(int memberId);
+	public int totalCount(Map<String,Object> countParamMap);
 	public List<Article> articleList(Map<String, Object> paramMap);
 	
 }

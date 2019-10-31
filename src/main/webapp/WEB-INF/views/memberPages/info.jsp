@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div class="panel-body" style="text-align: left;">
-					<span>보여주고 싶은 정보를 표시해주면된다</span>
+					<span>이메일 : ${resultMap.memberResponse.email }</span>
 				</div>
 			</div>
 			<c:if test="${resultMap.memberResponse.id eq member.id}">

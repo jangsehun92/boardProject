@@ -18,20 +18,12 @@ public class BoardRepositoryImpl implements BoardRepository{
 	}
 	
 	@Override
-	public int totalCount(String category) {
-		return sqlSession.selectOne("boardMapper.totalCount",category);
+	public int totalCount(Map<String,Object> countParamMap) {
+		return sqlSession.selectOne("boardMapper.totalCount",countParamMap);
 	}
 	
 	@Override
-	public int totalCount(int memberId) {
-		return sqlSession.selectOne("boardMapper.totalCount_memberId",memberId);
-	}
-
-	@Override
 	public List<Article> articleList(Map<String, Object> paramMap) {
-		if(paramMap.get("memberId") != null) {
-			return sqlSession.selectList("boardMapper.list_memberId", paramMap);
-		}
 		return sqlSession.selectList("boardMapper.list", paramMap);
 	}
 

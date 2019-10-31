@@ -2,7 +2,6 @@ package jsh.spring.project.domain.member.api;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,18 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jsh.spring.project.domain.board.domain.Article;
 import jsh.spring.project.domain.member.domain.Member;
 import jsh.spring.project.domain.member.dto.LoginRequest;
 import jsh.spring.project.domain.member.dto.MemberPasswordChangeRequest;
 import jsh.spring.project.domain.member.dto.MemberProfileUpdateRequest;
-import jsh.spring.project.domain.member.dto.MemberResponse;
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
 import jsh.spring.project.domain.member.dto.RegisterRequest;
 import jsh.spring.project.domain.member.service.MemberProfileService;
 import jsh.spring.project.domain.member.service.MemberRegisterService;
 import jsh.spring.project.domain.member.service.MemberSearchService;
-import jsh.spring.project.global.common.request.Pagination;
 
 @Controller
 @RequestMapping("/member")
@@ -89,13 +85,6 @@ public class MemberApi {
 	public String profile(HttpSession session, Model model, @PathVariable("memberId")int memberId, @RequestParam(defaultValue="1")int page) {
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap = memberSearchService.searchMember(memberId, page);
-//		MemberResponse memberResponse = (MemberResponse)resultMap.get("memberResponse");
-//		List<Article> articleList = (List<Article>)resultMap.get("articleList");
-//		Pagination pagination = (Pagination)resultMap.get("pagination");
-//		model.addAttribute("memberResponse", memberResponse);
-//		model.addAttribute("articleList", articleList);
-//		model.addAttribute("pagination", pagination);
-		
 		model.addAttribute("resultMap",resultMap);
 		return "memberPages/info";
 	}
