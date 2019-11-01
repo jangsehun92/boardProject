@@ -18,6 +18,9 @@
 		<typeAlias type="jsh.spring.project.domain.board.dto.ArticleCreateRequest" alias="ArticleCreateRequest"/>
 		<typeAlias type="jsh.spring.project.domain.board.dto.ArticleUpdateRequest" alias="ArticleUpdateRequest"/>
 		
+		<!-- 댓글 관련 -->
+		<typeAlias type="jsh.spring.project.domain.reply.domain.Reply" alias="Reply"/>
+		<typeAlias type="jsh.spring.project.domain.reply.dto.ReplyCreateRequest" alias="ReplyCreateRequest"/>
 	</typeAliases>
 	
 	<!-- mapper의 위치를 잡아준다. -->
@@ -31,6 +34,9 @@
 		<!-- 게시판 관련 -->
 		<mapper resource="/sqls/board/article.xml"/>
 		<mapper resource="/sqls/board/board.xml"/>
+		
+		<!-- 댓글 관련 -->
+		<mapper resource="/sqls/reply/reply.xml"/>
 	</mappers>
 
 </configuration>
