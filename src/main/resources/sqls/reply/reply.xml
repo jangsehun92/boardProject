@@ -5,8 +5,8 @@
 	<resultMap id="ReplyResultMap" type="Reply">
 		<result property="id" column="id"/>
 		<result property="articleId" column="board_id"/>
-		<result property="memberId" column="member_id"/>
-		<result property="nickname" column="nickname"/>
+		<result property="memberId" column="mb_id"/>
+		<result property="nickname" column="mb_nickname"/>
 		<result property="content" column="content"/>
 		<result property="regDate" column="reg_date" />
 	</resultMap>
@@ -19,5 +19,34 @@
 		WHERE board_id = #{articleId}
 		ORDER BY reg_date
 	</select>
+	
+	<insert id="save" parameterType="ReplyCreateRequest">
+		insert into REPLY_TB
+			VALUES(
+			REPLY_TB_SEQ.NEXTVAL, 
+			#{articleId}, 
+			#{memberId}, 
+			#{content},
+			SYSDATE
+			)
+	</insert>
+	
+	<update id="update" parameterType="ReplyUpdateRequest">
+		update 
+			REPLY_TB
+		SET
+			CONTENT = #{content}
+		WHERE
+			ID = #{id} and mb_id = #{memberId}
+	</update>
+	
+	<delete id="delete" parameterType="ReplyDeleteRequest">
+		delete
+		from
+			REPLY_TB
+		where
+			id = #{id} and mb_id = #{memberId}
+	</delete>
+	
 	
 </mapper>

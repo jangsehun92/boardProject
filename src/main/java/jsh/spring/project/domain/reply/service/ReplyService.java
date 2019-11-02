@@ -4,12 +4,12 @@ import java.util.List;
 
 import jsh.spring.project.domain.reply.domain.Reply;
 import jsh.spring.project.domain.reply.dto.ReplyCreateRequest;
+import jsh.spring.project.domain.reply.dto.ReplyDeleteRequest;
+import jsh.spring.project.domain.reply.dto.ReplyUpdateRequest;
 
 public interface ReplyService {
 	public List<Reply> list(int articleId);
-	//댓글입력
-	
 	public void create(ReplyCreateRequest dto);
-	//댓글수정
-	//댓글삭제
+	public void update(ReplyUpdateRequest dto);
+	public void delete(ReplyDeleteRequest dto);
 }

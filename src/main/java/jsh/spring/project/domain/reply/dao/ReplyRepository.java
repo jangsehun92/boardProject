@@ -3,11 +3,13 @@ package jsh.spring.project.domain.reply.dao;
 import java.util.List;
 
 import jsh.spring.project.domain.reply.domain.Reply;
+import jsh.spring.project.domain.reply.dto.ReplyCreateRequest;
+import jsh.spring.project.domain.reply.dto.ReplyDeleteRequest;
+import jsh.spring.project.domain.reply.dto.ReplyUpdateRequest;
 
 public interface ReplyRepository {
 	public List<Reply> list(int articleId);
-	// 댓글list
-	// 댓글입력
-	// 댓글수정
-	// 댓글삭제
+	public int save(ReplyCreateRequest dto);
+	public int update(ReplyUpdateRequest dto);
+	public int delete(ReplyDeleteRequest dto);
 }

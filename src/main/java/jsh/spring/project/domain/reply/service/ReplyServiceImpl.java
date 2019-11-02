@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import jsh.spring.project.domain.reply.dao.ReplyRepository;
 import jsh.spring.project.domain.reply.domain.Reply;
 import jsh.spring.project.domain.reply.dto.ReplyCreateRequest;
+import jsh.spring.project.domain.reply.dto.ReplyDeleteRequest;
+import jsh.spring.project.domain.reply.dto.ReplyUpdateRequest;
 
 @Service
 public class ReplyServiceImpl implements ReplyService{
@@ -24,7 +26,17 @@ public class ReplyServiceImpl implements ReplyService{
 
 	@Override
 	public void create(ReplyCreateRequest dto) {
-		
+		replyRepository.save(dto);
+	}
+
+	@Override
+	public void update(ReplyUpdateRequest dto) {
+		replyRepository.update(dto);
+	}
+
+	@Override
+	public void delete(ReplyDeleteRequest dto) {
+		replyRepository.delete(dto);
 	}
 
 }
