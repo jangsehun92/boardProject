@@ -21,6 +21,8 @@
 		<!-- 댓글 관련 -->
 		<typeAlias type="jsh.spring.project.domain.reply.domain.Reply" alias="Reply"/>
 		<typeAlias type="jsh.spring.project.domain.reply.dto.ReplyCreateRequest" alias="ReplyCreateRequest"/>
+		<typeAlias type="jsh.spring.project.domain.reply.dto.ReplyUpdateRequest" alias="ReplyUpdateRequest"/>
+		<typeAlias type="jsh.spring.project.domain.reply.dto.ReplyDeleteRequest" alias="ReplyDeleteRequest"/>
 	</typeAliases>
 	
 	<!-- mapper의 위치를 잡아준다. -->

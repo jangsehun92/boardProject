@@ -3,15 +3,20 @@ package jsh.spring.project.domain.reply.api;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jsh.spring.project.domain.member.domain.Member;
 import jsh.spring.project.domain.reply.dto.ReplyCreateRequest;
+import jsh.spring.project.domain.reply.dto.ReplyDeleteRequest;
+import jsh.spring.project.domain.reply.dto.ReplyUpdateRequest;
 import jsh.spring.project.domain.reply.service.ReplyService;
 
 @Controller
@@ -24,30 +29,35 @@ public class ReplyApi {
 	public ReplyApi(ReplyService replyService) {
 		this.replyService = replyService;
 	}
-	//댓글 요청
-	@RequestMapping(value = "/{articleId}", method = RequestMethod.GET)
-	public @ResponseBody Object list(@PathVariable("articleId")int articleId) {
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> list(int articleId) {
+		logger.info("**************** ReplyApi.list(" + articleId + ")");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		resultMap.put("message","ok");
 		resultMap.put("replyList",replyService.list(articleId));
-		return "resultMap";
+		return resultMap;
 	}
-	//댓글 입력
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody Object create(ReplyCreateRequest dto) {
-		return "";
+	public @ResponseBody Object create(HttpSession session, ReplyCreateRequest dto) {
+		Member member = (Member)session.getAttribute("member");
+		dto.setMemberId(member.getId());
+		
+		replyService.create(dto);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("message","ok");
+		return resultMap;
 	}
 	
-	//댓글 수정
 	@RequestMapping(method = RequestMethod.PUT)
-	public @ResponseBody Object update() {
+	public @ResponseBody Object update(ReplyUpdateRequest dto) {
 		return "";
 	}
 	
-	//댓글 삭제
 	@RequestMapping(method = RequestMethod.DELETE)
-	public @ResponseBody Object delete() {
+	public @ResponseBody Object delete(ReplyDeleteRequest dto) {
 		return "";
 	}
 }
