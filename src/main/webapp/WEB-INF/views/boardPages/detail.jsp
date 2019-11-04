@@ -64,21 +64,33 @@ function replyList(){
 		success:function(resultMap){
 			
 			if(resultMap.message == "ok"){
-				alert();
 			}
 			
 			if($("#noComments").length){
 				$("#noComments").empty();
-				
 			}
 			$("#replyList").empty();
+			$("#replyContent").val("");
 			
 			values = resultMap.replyList;
-			
 			$.each(values, function(index, value) {
-				$("#replyContent").val("");	
-				$("#replyList").append("<li class='list-group-item'><span>"+value.nickname+"</span><span class='text-muted'> | <small>"+uxin_timestamp(value.regDate)+"</small></span>"+
+				if(value.memberId == "${member.id}"){
+					$("#replyList").append("<li class='list-group-item'><span>"+value.nickname+"</span><span class='text-muted'> | <small>"+uxin_timestamp(value.regDate)+"</small></span>"+
+							"<div style='float: right;''>"+
+								"<div class='btn-group'>"+
+								  "<button type='button' class='btn btn-default btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>"+
+								  "<span class='caret'></span>"+
+								  "</button>"+
+								  "<ul class='dropdown-menu' role='menu'>"+
+								    "<li><a href='#'>수정</a></li>"+
+								    "<li><a href='#'>삭제</a></li>"+
+								  "</ul>"+
+								"</div>"+
+						"</div>"+"<div style='white-space : pre-wrap;height: 100%'>"+value.content+"</div></li>");
+				}else{
+					$("#replyList").append("<li class='list-group-item'><span>"+value.nickname+"</span><span class='text-muted'> | <small>"+uxin_timestamp(value.regDate)+"</small></span>"+
 											"<div style='white-space : pre-wrap;height: 100%'>"+value.content+"</div></li>");
+				}
 			});
 		},
 		error:function(request,status,error){
@@ -179,7 +191,22 @@ function listConfirm(){
 					<c:choose>
 						<c:when test="${empty articleList}">
 							<li class="list-group-item" id="noComments">
-								<span>댓글이 없습니다.</span>
+								<div>
+									<div><span>작성자</span><span class="text-muted"> | <small>날짜</small></span></div>
+									<div style="float: right;">
+										<div class="btn-group">
+										  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										  <span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu" role="menu">
+										    <li><a href="#">수정</a></li>
+										    <li><a href="#">삭제</a></li>
+										  </ul>
+										</div>
+									</div>
+									<!--  <span>댓글이 없습니다.</span> -->
+									<div class="" style="white-space : pre-wrap;height: 100%">내용</div>
+								</div>
 							</li>
 						</c:when>
 						
