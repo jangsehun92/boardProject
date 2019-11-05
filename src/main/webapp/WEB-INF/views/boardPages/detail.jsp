@@ -194,6 +194,10 @@ function listConfirm(){
 								<div>
 									<div><span>작성자</span><span class="text-muted"> | <small>날짜</small></span></div>
 									<div style="float: right;">
+										<div>
+										 	<a href="#">수정</a><br>
+										    <a href="#">삭제</a>
+										</div>
 										<div class="btn-group">
 										  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 										  <span class="caret"></span>
