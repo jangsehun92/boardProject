@@ -76,17 +76,18 @@ function replyList(){
 			$.each(values, function(index, value) {
 				if(value.memberId == "${member.id}"){
 					$("#replyList").append("<li class='list-group-item'><span>"+value.nickname+"</span><span class='text-muted'> | <small>"+uxin_timestamp(value.regDate)+"</small></span>"+
-							"<div style='float: right;''>"+
+							"<div id='reply_"+value.id+"' style='float: right;''>"+
 								"<div class='btn-group'>"+
 								  "<button type='button' class='btn btn-default btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>"+
 								  "<span class='caret'></span>"+
 								  "</button>"+
 								  "<ul class='dropdown-menu' role='menu'>"+
-								    "<li><a href='#'>수정</a></li>"+
+								    "<li><a href='#' onClick='replyUpdate("+value.id+")'>수정</a></li>"+
 								    "<li><a href='#'>삭제</a></li>"+
 								  "</ul>"+
 								"</div>"+
-						"</div>"+"<div style='white-space : pre-wrap;height: 100%'>"+value.content+"</div></li>");
+							"</div>"+"<div id='replyform' style='white-space : pre-wrap;height: 100%'>"+value.content+"</div></li>");
+					$('.dropdown-toggle').dropdown();
 				}else{
 					$("#replyList").append("<li class='list-group-item'><span>"+value.nickname+"</span><span class='text-muted'> | <small>"+uxin_timestamp(value.regDate)+"</small></span>"+
 											"<div style='white-space : pre-wrap;height: 100%'>"+value.content+"</div></li>");
@@ -95,6 +96,96 @@ function replyList(){
 		},
 		error:function(request,status,error){
 			alert("code:"+request.status+"\n\n"+"message:"+request.responseText+"\n\n"+"error:"+error);
+		}
+	});
+	return false;
+}
+
+function replyUpdate(id){
+	alert(id);
+	
+	var displayId = $("#updateForm-"+id);
+	
+	displayId.show();
+	
+	var content = $("#replyContent").val().replace(/\s|/gi,'');
+	
+	if(displayId.style.display=="none"){
+		$("replyForm-"+id).disply = "none";	
+	}
+	
+	$("#replyform").append("<form method='put' action='/reply' onsubmit='return replyCreate();'>"+
+		"<textarea id='replyContent' name='content' class='form-control z-depth-1' rows='3' maxlength='1000' placeholder='댓글을 입력해주세요.'></textarea>"+
+			"<input type='submit' class='pull-right btn btn-primary' value='저장'>"+
+		"</form>");
+	
+	/*
+	<form method="put" action='/reply' onsubmit='return replyCreate();'>
+		<textarea id='replyContent' name='content' class='form-control z-depth-1' rows='3' maxlength='1000' placeholder='댓글을 입력해주세요.'></textarea>
+		<input type='submit' class='pull-right btn btn-primary' value='저장'>
+	</form>
+	*/
+	
+	/*
+	if(content==""){
+		alert("댓글을 입력해주세요.");
+		$("#replyContent").val("");
+		$("#replyContent").focus();
+		return false;
+	}
+	
+	var replyCreateRequest = {
+			articleId : "${article.id}",
+			content : $("#replyContent").val(),
+	}
+	
+	$.ajax({
+		url:"/reply",
+		type:"post",
+		async: true,
+		data: replyCreateRequest, 
+		
+		success:function(resultMap){
+			if(resultMap.message == "ok"){
+				replyList();
+			}
+		},
+		error:function(request,status,error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	return false;
+	*/
+}
+
+function replyDelete(){
+	var content = $("#replyContent").val().replace(/\s|/gi,'');
+	
+	if(content==""){
+		alert("댓글을 입력해주세요.");
+		$("#replyContent").val("");
+		$("#replyContent").focus();
+		return false;
+	}
+	
+	var replyCreateRequest = {
+			articleId : "${article.id}",
+			content : $("#replyContent").val(),
+	}
+	
+	$.ajax({
+		url:"/reply",
+		type:"post",
+		async: true,
+		data: replyCreateRequest, 
+		
+		success:function(resultMap){
+			if(resultMap.message == "ok"){
+				replyList();
+			}
+		},
+		error:function(request,status,error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	});
 	return false;
@@ -192,24 +283,25 @@ function listConfirm(){
 						<c:when test="${empty articleList}">
 							<li class="list-group-item" id="noComments">
 								<div>
-									<div><span>작성자</span><span class="text-muted"> | <small>날짜</small></span></div>
-									<div style="float: right;">
-										<div>
-										 	<a href="#">수정</a><br>
-										    <a href="#">삭제</a>
-										</div>
-										<div class="btn-group">
-										  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-										  <span class="caret"></span>
-										  </button>
-										  <ul class="dropdown-menu" role="menu">
-										    <li><a href="#">수정</a></li>
-										    <li><a href="#">삭제</a></li>
-										  </ul>
-										</div>
+									<div>
+									<div>	
+											<div id="replyForm-111">
+												<span>댓글이 없습니다.</span>
+											</div>
+											
+											<a href='#' onClick="replyUpdate(111)">수정</a>
+											<div id="updateForm-111" style="display: none;">
+												<form method="post" action="/reply">
+													<input type="hidden" name="_method" value="PUT">
+													<textarea id="replyContent" name="content" class="form-control z-depth-1" rows="3" maxlength="1000" placeholder="댓글을 입력해주세요."></textarea>
+												</form>
+											</div>
 									</div>
-									<!--  <span>댓글이 없습니다.</span> -->
-									<div class="" style="white-space : pre-wrap;height: 100%">내용</div>
+									
+									<form method="post" action="/reply" data-id="111">
+										<input type="hidden" name="_method" value="DELETE">
+									</form>
+									</div>
 								</div>
 							</li>
 						</c:when>

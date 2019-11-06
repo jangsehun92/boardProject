@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,11 +55,25 @@ public class ReplyApi {
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	public @ResponseBody Object update(ReplyUpdateRequest dto) {
-		return "";
+		ResponseEntity<String> entity = null;
+		try {
+			replyService.update(dto);
+			entity = new ResponseEntity<String>("UPDATE", HttpStatus.OK);
+		}catch(Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
 	public @ResponseBody Object delete(ReplyDeleteRequest dto) {
-		return "";
+		ResponseEntity<String> entity = null;
+		try {
+			replyService.delete(dto);
+			entity = new ResponseEntity<String>("DELETE", HttpStatus.OK);
+		}catch(Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 }
