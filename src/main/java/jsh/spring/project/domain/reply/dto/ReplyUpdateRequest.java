@@ -5,9 +5,20 @@ public class ReplyUpdateRequest {
 	private int memberId;
 	private String content;
 	
+	public ReplyUpdateRequest() {
+		
+	}
+	
 	public ReplyUpdateRequest(int id, String content) {
-		this.id = id;
 		this.content = content;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getMemberId() {
@@ -17,12 +28,9 @@ public class ReplyUpdateRequest {
 	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
-
-	public int getId() {
-		return id;
-	}
-
+	
 	public String getContent() {
 		return content;
 	}
+	
 }
