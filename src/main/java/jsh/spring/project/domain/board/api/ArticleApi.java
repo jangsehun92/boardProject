@@ -58,7 +58,7 @@ public class ArticleApi {
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String update(HttpSession session, Model model, @PathVariable("id")int id) {
-		model.addAttribute("article",articleService.detail(id));
+		model.addAttribute("article",articleService.getArticle(id));
 		return "boardPages/update";
 	}
 

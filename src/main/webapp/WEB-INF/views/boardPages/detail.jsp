@@ -7,16 +7,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>board_detail</title>
+	<meta charset="UTF-8">
+	<title>board_detail</title>
 </head>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 <script type="text/javascript">
-
 function replyCreate(){
 	var content = $("#replyContent").val().replace(/\s|/gi,'');
 	
@@ -28,7 +26,7 @@ function replyCreate(){
 	}
 	
 	var replyCreateRequest = {
-			articleId : "${article.id}",
+			articleId : "${resultMap.article.id}",
 			content : $("#replyContent").val(),
 	}
 	
@@ -221,6 +219,7 @@ function deleteConfirm(id){
 </script>
 <body>
 <div class="container" style="margin-top: 50px">
+	<input type="hidden" id ="category" value="${resultMap.article.category }">
 	<div class="header">
 		<h2>글보기</h2>
 		<hr>
@@ -309,10 +308,55 @@ function deleteConfirm(id){
 						</c:when>
 						
 						<c:otherwise>
-							<c:forEach items="${resultMap.replyList }" var="replyDto">										
+							<c:forEach items="${resultMap.replyList }" var="replyDto">
+								<!-- 										
 								<li class="list-group-item"><span>${ replyDto.nickname}</span><span class="text-muted"> | <small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${replyDto.regDate}"/></small></span>
+								<div id="dropdownForm-${replyDto.id}" style="float: right;">
+											<div class='btn-group'>
+												<button type='button' class='btn btn-default btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
+													<span class='caret'></span>
+												</button>
+												<ul class='dropdown-menu' role='menu'>
+													<li><a onClick='replyUpdateForm("+value.id+")'>수정</a></li>
+													<li><a onClick='deleteConfirm("+value.id+")'>삭제</a></li>
+												</ul>
+										</div>
+										</div>
 									<div class="" style="white-space : pre-wrap;height: 100%">${ replyDto.content}</div>
 								</li>
+								 -->
+								<li class="list-group-item">
+									<div style="position: relative; height: 100%">
+										<div>
+											<div>
+												<span>${ replyDto.nickname}</span><span class="text-muted"> | <small>uxin_timestamp(${ replyDto.nickname})</small></span>
+													<c:if test="${member.id eq replyDto.memberId}">
+													<div id="dropdownForm-${ replyDto.id}" style="float: right;">
+														<div class="btn-group">
+															<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+																<span class="caret"></span>
+															</button>
+															<ul class="dropdown-menu" role="menu">
+																<li><a onClick="replyUpdateForm(${ replyDto.id})">수정</a></li>
+																<li><a onClick="deleteConfirm(${ replyDto.id})">삭제</a></li>
+															</ul>
+														</div>
+													</div>
+													</c:if>
+										<div id="replyForm-${replyDto.id }" style="white-space : pre-wrap;height: 100%"><p>${replyDto.content }</p></div>
+										</div>
+											<div id="updateForm-${replyDto.id }" style='display: none;'>
+												<form method="post" action="/reply/${replyDto.id }" onsubmit="return replyUpdate(${replyDto.id });">
+													<input type="hidden" name="_method" value="PUT">
+													<textarea id="replyContent-${replyDto.id }" name="content" class="form-control z-depth-1" rows="3" maxlength="1000" placeholder="댓글을 입력해주세요.">${replyDto.content }</textarea>
+													<input type="submit" style="width:50%" class="btn btn-success" value="수정">
+													<input type="button" style="width:50%; float: left;" class="btn btn-primary" value="취소" onclick="replyForm(${replyDto.id })">
+			 									</form>
+											</div>
+										</div>
+									</div>
+								</li>		
+														
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>

@@ -15,23 +15,25 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $('.dropdown-toggle').dropdown()
+	  $('.dropdown-toggle').dropdown();
+	  
 });
+
 $(function(){
-	if("${category}"=="community"){
-		$("#main").append("<h3>커뮤니티</h3>")
+	if($("#category").val()=="community"){
+		$("#main").append("<h3>커뮤니티</h3>");
 		$("#community").addClass("active");
 	}
 	
-	if("${category}"=="questions"){
-		$("#main").append("<h3>질문</h3>")
+	if($("#category").val()=="questions"){
+		$("#main").append("<h3>질문</h3>");
 		$("#questions").addClass("active");
 	}
 });
 
 </script>
 <body>
-<!-- <input type="hidden" name="category" id="category" value="${category }"> -->
+<!--  <input type="hidden" name="category" id="category" value="${category }">-->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
 	<div class="navbar-header">

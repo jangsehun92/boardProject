@@ -47,6 +47,7 @@ public class BoardApi {
 			paramMap.put("searchType", "category");
 			paramMap.put("category",category);
 		}
+		
 		int totalCount = boardService.totalCount(countParamMap);
 		Pagination pagination = new Pagination(totalCount, page);
 		int countList = pagination.getCountList();

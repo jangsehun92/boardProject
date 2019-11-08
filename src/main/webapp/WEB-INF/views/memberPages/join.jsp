@@ -75,7 +75,7 @@ function check_form(){
 				</div>
 				<form method="post" action="/member/register" class="form-signup form-user panel-body" onsubmit="return check_form();">
 					<fieldset>
-						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" maxlength="30" style="margin-top: 10px;" pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+$">
+						<input type="text" class="form-control input-sm" id="email" name="email" placeholder="이메일" maxlength="30" style="margin-top: 10px;">
 						
 						<input type="password" class="form-control input-sm" id="password" name="password" placeholder="비밀번호" style="margin-top: 10px;">
 						

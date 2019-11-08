@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import jsh.spring.project.domain.board.dao.ArticleRepository;
+import jsh.spring.project.domain.board.domain.Article;
 import jsh.spring.project.domain.board.dto.ArticleCreateRequest;
 import jsh.spring.project.domain.board.dto.ArticleUpdateRequest;
 import jsh.spring.project.domain.reply.dao.ReplyRepository;
@@ -19,6 +20,11 @@ public class ArticleServiceImpl implements ArticleService{
 	public ArticleServiceImpl(ArticleRepository articleRepository, ReplyRepository replyRepository) {
 		this.articleRepository = articleRepository;
 		this.replyRepository = replyRepository;
+	}
+	
+	@Override
+	public Article getArticle(int id) {
+		return articleRepository.detail(id);
 	}
 
 	@Override
@@ -43,5 +49,7 @@ public class ArticleServiceImpl implements ArticleService{
 	public void delete(int id) {
 		articleRepository.delete(id);
 	}
+
+	
 
 }

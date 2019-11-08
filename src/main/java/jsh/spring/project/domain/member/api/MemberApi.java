@@ -83,6 +83,7 @@ public class MemberApi {
 
 	@RequestMapping(value = "/info/{memberId}", method = RequestMethod.GET)
 	public String profile(HttpSession session, Model model, @PathVariable("memberId")int memberId, @RequestParam(defaultValue="1")int page) {
+		session.removeAttribute("category");
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap = memberSearchService.searchMember(memberId, page);
 		model.addAttribute("resultMap",resultMap);
@@ -90,7 +91,8 @@ public class MemberApi {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String profileUpdate() {
+	public String profileUpdate(HttpSession session) {
+		session.removeAttribute("category");
 		return "memberPages/updateProfile";
 	}
 	
@@ -109,7 +111,8 @@ public class MemberApi {
 	}
 	
 	@RequestMapping(value = "/passwordChange", method = RequestMethod.GET)
-	public String passwordChange() throws IOException {
+	public String passwordChange(HttpSession session) throws IOException {
+		session.removeAttribute("category");
 		return "memberPages/passwordChange";
 	}
 		

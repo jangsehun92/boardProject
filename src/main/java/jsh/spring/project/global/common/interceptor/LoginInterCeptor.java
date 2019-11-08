@@ -16,24 +16,25 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		logger.info("Controller 요청 전 interceptor preHandel 진입");
+		logger.info("[LoginInterCeptor] 로그인 필요한 요청 들어옴");
 		HttpSession session = request.getSession();
 		Member member = (Member)session.getAttribute("member");
 		
-		
-		logger.info("**************** request.getMethod() : " + request.getMethod());
 		String[] arr = request.getRequestURI().split("/");
-		logger.info("**************** request.getRequestURI() : " + arr[1]);
+		logger.info("[LoginInterCeptor] request.getRequestURI() : " + request.getMethod() +" "+ request.getRequestURI());
 		
 		if(arr[1].equals("article") && request.getMethod().equals("GET")) {
+			logger.info("[LoginInterCeptor] 게시글 요청");
 			return true;
 		}
 		
 		if(arr[1].equals("reply") && request.getMethod().equals("GET")) {
+			logger.info("[LoginInterCeptor] 댓글 요청");
 			return true;
 		}
 		
 		if(member == null) {
+			logger.info("[LoginInterCeptor] 허용되지않은 요청 ");
 			response.sendRedirect("/login");
 			return false;
 		}
