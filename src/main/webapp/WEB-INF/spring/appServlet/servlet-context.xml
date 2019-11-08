@@ -30,8 +30,13 @@
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/member/edit"/>
-			<mapping path="/member/passwordChange"/>
+			<mapping path="/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/login"/>
+			<exclude-mapping path="/member/join"/>
+			<exclude-mapping path="/member/login"/>
+			<exclude-mapping path="/member/info"/>
+			<exclude-mapping path="/articles/{category}"/>
 			<beans:ref bean="loginInterCeptor"/>
 		</interceptor>
 	</interceptors>

@@ -18,13 +18,13 @@ $(document).ready(function(){
     $('.dropdown-toggle').dropdown()
 });
 $(function(){
-	if($("#category").val()=="community"){
-		$("#main").append("<h3>커뮤니티</h3>");
+	if("${category}"=="community"){
+		$("#main").append("<h3>커뮤니티</h3>")
 		$("#community").addClass("active");
 	}
 	
-	if($("#category").val()=="questions"){
-		$("#main").append("<h3>질문</h3>");
+	if("${category}"=="questions"){
+		$("#main").append("<h3>질문</h3>")
 		$("#questions").addClass("active");
 	}
 });

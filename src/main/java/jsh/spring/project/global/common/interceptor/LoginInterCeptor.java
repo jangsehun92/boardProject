@@ -20,6 +20,19 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		Member member = (Member)session.getAttribute("member");
 		
+		
+		logger.info("**************** request.getMethod() : " + request.getMethod());
+		String[] arr = request.getRequestURI().split("/");
+		logger.info("**************** request.getRequestURI() : " + arr[1]);
+		
+		if(arr[1].equals("article") && request.getMethod().equals("GET")) {
+			return true;
+		}
+		
+		if(arr[1].equals("reply") && request.getMethod().equals("GET")) {
+			return true;
+		}
+		
 		if(member == null) {
 			response.sendRedirect("/login");
 			return false;

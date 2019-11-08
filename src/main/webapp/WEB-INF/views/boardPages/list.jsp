@@ -65,9 +65,12 @@
 			</c:choose>
 		</table>
 		<hr>
-		<div style="float: right">
-			<a href="/articles/${category }/create" class="btn btn-primary">글쓰기</a>
-		</div>
+		<c:if test="${!empty member}">
+			<div style="float: right">
+				<a href="/articles/${category }/create" class="btn btn-primary">글쓰기</a>
+			</div>
+		</c:if>
+		
 		<div>
 			<nav aria-label="..." style="text-align: center;">
 				<ul class="pagination" id="pagination">

@@ -1,5 +1,7 @@
 package jsh.spring.project.domain.board.api;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import jsh.spring.project.domain.board.domain.Article;
 import jsh.spring.project.domain.board.dto.ArticleCreateRequest;
 import jsh.spring.project.domain.board.dto.ArticleUpdateRequest;
 import jsh.spring.project.domain.board.service.ArticleService;
@@ -40,8 +41,8 @@ public class ArticleApi {
 	//READ
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String detail(Model model, @PathVariable("id") int id) {
-		Article article = articleService.detail(id);
-		model.addAttribute("article", article);
+		Map<String, Object> resultMap = articleService.detail(id);
+		model.addAttribute("resultMap", resultMap);
 		return "boardPages/detail";
 	}
 

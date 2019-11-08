@@ -35,12 +35,13 @@ function replyCreate(){
 	$.ajax({
 		url:"/reply",
 		type:"post",
-		data: replyCreateRequest, 
+		contentType : "application/json; charset=UTF-8",
+		dataType : "text",
+		data: JSON.stringify(replyCreateRequest), 
 		
-		success:function(resultMap){
-			if(resultMap.message == "ok"){
-				replyList();
-			}
+		success:function(data){
+			alert("댓글이 입력되었습니다.");
+			replyList();
 		},
 		error:function(request,status,error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -50,43 +51,54 @@ function replyCreate(){
 }
 
 function replyList(){
+	/*
 	var articleId = { 
 		articleId : "${article.id}" 
 	}
+	*/
 	
 	$.ajax({
-		url:"/reply/${article.id}",
+		url:"/reply/${resultMap.article.id}",
 		type:"GET",
-		data: articleId, 
-
-		success:function(resultMap){
-			
-			if(resultMap.message == "ok"){
-			}
-			
+		dataType: "JSON",
+		success:function(data){
 			if($("#noComments").length){
 				$("#noComments").empty();
 			}
 			$("#replyList").empty();
 			$("#replyContent").val("");
 			
-			values = resultMap.replyList;
-			$.each(values, function(index, value) {
-				if(value.memberId == "${member.id}"){
-					$("#replyList").append(
+			if(data.length == 0){
+				$("#replyList").append(
 					"<li class='list-group-item'>"+
 						"<div>"+
 							"<div>"+
 								"<div>"+
+									"<div id='replyForm'>"+
+										"<span>댓글이 없습니다.</span>"+
+									"</div>"+
+								"</div>"+
+							"</div>"+
+						"</div>"+
+					"</li>"
+				);
+			}
+			$.each(data, function(index, value) {
+				if(value.memberId == "${member.id}"){
+					$("#replyList").append(
+					"<li class='list-group-item'>"+
+						"<div style='position: relative; height: 100%'>"+
+							"<div>"+
+								"<div>"+
 									"<span>"+value.nickname+"</span><span class='text-muted'> | <small>"+uxin_timestamp(value.regDate)+"</small></span>"+
-										"<div id='dropdownForm-"+value.id+"' style='float: right;''>"+
+										"<div id='dropdownForm-"+value.id+"' style='float: right;'>"+
 											"<div class='btn-group'>"+
 												"<button type='button' class='btn btn-default btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>"+
 													"<span class='caret'></span>"+
 												"</button>"+
 												"<ul class='dropdown-menu' role='menu'>"+
-													"<li><a href='#' onClick='replyUpdateForm("+value.id+")'>수정</a></li>"+
-													"<li><a href='#' onClick='deleteConfirm("+value.id+")'>삭제</a></li>"+
+													"<li><a onClick='replyUpdateForm("+value.id+")'>수정</a></li>"+
+													"<li><a onClick='deleteConfirm("+value.id+")'>삭제</a></li>"+
 												"</ul>"+
 										"</div>"+
 								"</div>"+
@@ -97,8 +109,9 @@ function replyList(){
 									"<form method='post' action='/reply/"+value.id+"' onsubmit='return replyUpdate("+value.id+");'>"+
 										"<input type='hidden' name='_method' value='PUT'>"+
 										"<textarea id='replyContent-"+value.id+"' name='content' class='form-control z-depth-1' rows='3' maxlength='1000' placeholder='댓글을 입력해주세요.'>"+value.content+"</textarea>"+
-										"<input type='submit' class='pull-right btn btn-primary' value='수정'>"+
-									"</form>"+
+										"<input type='submit' style='width:50%' class='btn btn-success' value='수정'>"+
+										"<input type='button' style='width:50%' class='btn btn-primary' value='취소' onclick='replyForm("+value.id+")'>"+
+ 									"</form>"+
 								"</div>"+
 							"</div>"+
 						"</div>"+
@@ -122,10 +135,22 @@ function replyUpdateForm(id){
 	var replyForm = $("#replyForm-"+id);
 	var updateForm = $("#updateForm-"+id);
 	
-	dropdownForm.hide();
 	replyForm.hide();
+	dropdownForm.hide();
 	updateForm.show();
 	$("#replyContent-"+id).focus();
+}
+
+function replyForm(id){
+	var dropdownForm = $("#dropdownForm-"+id);
+	var replyForm = $("#replyForm-"+id);
+	var updateForm = $("#updateForm-"+id);
+	
+	
+	replyForm.show();
+	dropdownForm.show();
+	updateForm.hide();
+	$("#replyForm-"+id).focus();
 }
 
 function replyUpdate(id){
@@ -195,45 +220,39 @@ function deleteConfirm(id){
 
 </script>
 <body>
-
 <div class="container" style="margin-top: 50px">
-	
 	<div class="header">
 		<h2>글보기</h2>
 		<hr>
 			<ul class="list-group">
-			
 				<li class="list-group-item">
 					<div class="title">
-						<h3>${article.title }</h3>
+						<h3>${resultMap.article.title }</h3>
 					</div>
-					
 					<div class="row" >
 						<div class="col-md-4" style="float: left">
-							<span>${article.writer } |</span> <span><small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${article.regDate }"/></small></span>
+							<span>${resultMap.article.writer } |</span> <span><small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${resultMap.article.regDate }"/></small></span>
 						</div>
 						<div style="float: right">
 							<span class="text-muted"><small>조회 | 댓글 | 추천 </small></span>
 						</div>
 					</div>
-				
 				</li>
-			<li class="list-group-item">
-			
-			<div>
-				<div id="board_content" style="white-space : pre-wrap;height: 100%">${article.content }</div>
-			</div>
-			</li>
+				<li class="list-group-item">
+					<div>
+						<div id="board_content" style="white-space : pre-wrap;height: 100%">${resultMap.article.content }</div>
+					</div>
+				</li>
 			</ul>
 			<div class="row" style="margin-left: 0px; margin-right: 0px">
 					<div style="float: left">
-					<a href="/articles/${article.category }" class="btn btn-primary">목록</a>
+					<a href="/articles/${resultMap.article.category }" class="btn btn-primary">목록</a>
 					</div>
 					<div style="float: left">
-					<c:if test="${member.id eq article.memberId}">
-						<input type="button" class="btn btn-primary" value="수정" onclick="location.href='/article/edit/${article.id}'">
+					<c:if test="${member.id eq resultMap.article.memberId}">
+						<input type="button" class="btn btn-primary" value="수정" onclick="location.href='/article/edit/${resultMap.article.id}'">
 						<div style="float: left">
-						<form method="post" action="/article/${article.id }">
+						<form method="post" action="/article/${resultMap.article.id }">
 							<input type="hidden" name="_method" value="delete"/>
 							<input type="submit" class="btn btn-primary" value="삭제">
 						</form>
@@ -248,55 +267,53 @@ function deleteConfirm(id){
 			<hr>
 			
 			<div class="form-group shadow-textarea">
-			  	<label>댓글</label>
-			  	<form method="post" action="/reply" onsubmit="return replyCreate();">
-			  		<textarea id="replyContent" name="content" class="form-control z-depth-1" rows="3" maxlength="1000" placeholder="댓글을 입력해주세요."></textarea>
-			  		<input type="submit" class="pull-right btn btn-primary" value="작성">
-			  	</form>
-			  	<div>
-			  	<input type="button" class="pull-left btn btn-primary" value="새로고침" onclick="listConfirm();">
-			  	
-			  	</div>
+			  	<c:choose>
+						<c:when test="${empty member}">
+							<span>로그인을 하시면 댓글을 등록할 수 있습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<label>댓글</label>
+								<div style="position: relative; height: 100%">
+									<div>
+									<form method="post" action="/reply" onsubmit="return replyCreate();">
+										<textarea id="replyContent" name="content" class="form-control z-depth-1" rows="3" maxlength="1000" placeholder="댓글을 입력해주세요."></textarea>
+										<input type="submit" class="btn btn-success" style="width:100%;" value="작성">
+									</form>
+									</div>
+									<div>
+									</div>
+								</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
+			<hr>
+				<input type="button" class="btn btn-primary" value="새로고침" onclick="listConfirm();">
 			<div>
-				<hr>
+				
 				<ul class="list-group" id="replyList">
+					
 					<c:choose>
-						<c:when test="${empty articleList}">
+						<c:when test="${empty resultMap.replyList}">
 							<li class="list-group-item" id="noComments">
 								<div>
 									<div>
-									<div>	
-											<div id="replyForm-111">
+										<div>	
+											<div id="replyForm">
 												<span>댓글이 없습니다.</span>
 											</div>
-											
-											<a href='#' onClick="replyUpdateForm(111)">수정</a>
-											<div id="updateForm-111" style="display: none;">
-												<form method="post" action="/reply">
-													<input type="hidden" name="_method" value="PUT">
-													<textarea id="replyContent" name="content" class="form-control z-depth-1" rows="3" maxlength="1000" placeholder="댓글을 입력해주세요."></textarea>
-												</form>
-											</div>
-									</div>
-									
-									<form method="post" action="/reply" data-id="111">
-										<input type="hidden" name="_method" value="DELETE">
-									</form>
+										</div>
 									</div>
 								</div>
 							</li>
 						</c:when>
 						
 						<c:otherwise>
-							<!-- 
-							<c:forEach items="${boardComment_list }" var="boardCommentDto">										
-								<li class="list-group-item"><span>${ boardCommentDto.user_id}</span><span class="text-muted"> | <small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardCommentDto.board_comment_regDate}"/></small></span>
-									<div class="" style="white-space : pre-wrap;height: 100%">${ boardCommentDto.board_comment_content}</div>
+							<c:forEach items="${resultMap.replyList }" var="replyDto">										
+								<li class="list-group-item"><span>${ replyDto.nickname}</span><span class="text-muted"> | <small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${replyDto.regDate}"/></small></span>
+									<div class="" style="white-space : pre-wrap;height: 100%">${ replyDto.content}</div>
 								</li>
 							</c:forEach>
-							 -->	
 						</c:otherwise>
 					</c:choose>
 				</ul>

@@ -40,6 +40,10 @@ function check_form(){
 	}
 }
 
+function login(){
+		
+}
+
 </script>
 	<div class="container" style="margin-top: 80px; align-items: center;">
 		<div class="col-md-6 main-block-center">
