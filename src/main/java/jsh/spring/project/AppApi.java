@@ -32,11 +32,10 @@ public class AppApi {
 	
 	public void removeCategory(HttpSession session) {
 		String category = (String)session.getAttribute("category");
-		
 		if(category == null || "".equals(category)) {
-			logger.info("*** [ session에 category ] 없음 ***");
+			logger.info("*** [ session 내에 category ] 없음 ***");
 		}else {
-			logger.info("*** [ session에 category ] 삭제 ***");
+			logger.info("*** [ session 내에 category ] 삭제 ***");
 			session.removeAttribute("category");
 		}
 		

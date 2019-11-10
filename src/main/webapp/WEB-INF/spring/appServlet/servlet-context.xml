@@ -25,6 +25,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
 	<beans:bean id="loginInterCeptor" class="jsh.spring.project.global.common.interceptor.LoginInterCeptor">
 	</beans:bean>
 	
@@ -35,6 +36,7 @@
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/login"/>
 			<exclude-mapping path="/member/join"/>
+			<exclude-mapping path="/member/email/**"/>
 			<exclude-mapping path="/member/register"/>
 			<exclude-mapping path="/member/registerConfirm"/>
 			<exclude-mapping path="/member/resendEmail/**"/>

@@ -26,9 +26,13 @@ public class MemberRegisterServiceImpl implements MemberRegisterService{
 	}
 	
 	@Override
+	public int checkEmail(String email) {
+		return memberRepository.checkEmail(email);
+	}
+	
+	@Override
 	@Transactional
 	public void singUp(RegisterRequest dto) throws Exception{
-		memberRepository.checkEmail(dto.getEmail());
 		memberRepository.save(dto);
 		String authKey = new AuthKey().getKey(64, false);
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -55,4 +59,6 @@ public class MemberRegisterServiceImpl implements MemberRegisterService{
 		authRepository.updateAuthKey(new RegisterConfirmRequest(email, authKey));
 		emailService.resendEmail(email, authKey);
 	}
+
+	
 }

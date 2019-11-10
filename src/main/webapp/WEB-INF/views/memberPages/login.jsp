@@ -8,7 +8,7 @@
 <title>Login</title>
 </head>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/inko@1.1.0/inko.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/inko@1.1.0/inko.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -16,16 +16,11 @@
 <body>
 <script type="text/javascript">
 //한 > 영 & 영 > 한 변환 자바스크립트 오픈소스 라이브러리
-var Inko = require('inko');
-var inko = Inko();
+var inko = new Inko();
 
-//유효성 검사
 function check_form(){
-	//replace 로 공백 제거
 	var email = $("#email").val().replace(/\s|/gi,'');
-	var password = $("#password").val().replace(/\s|/gi,'');
-	
-	alert(inko.ko2en(email));
+	var password = inko.ko2en($("#password").val().replace(/\s|/gi,''));
 	
 	if(email==""){
 		alert("이메일을 입력해주세요.");
@@ -38,10 +33,35 @@ function check_form(){
 		$("#password").focus();
 		return false;
 	}
-}
-
-function login(){
-		
+	
+	var loginRequest = {
+			email : email,
+			password : password,
+	}
+	
+	$.ajax({
+		url:"/member/login",
+		type:"post",
+		//contentType : "application/json; charset=UTF-8",
+		dataType : "text",
+		//data: JSON.stringify(loginRequest), 
+		data: loginRequest,
+		success:function(data){
+			if(data=='OK'){
+				location.href="/";	
+			}
+		},
+		error:function(request,status,error){
+			if(request.status == '404'){
+				alert(request.responseText);
+			}
+			if(request.status == '302'){
+				location.href="/member/email";
+			}
+			//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	return false;
 }
 
 </script>
