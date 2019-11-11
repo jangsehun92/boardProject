@@ -211,6 +211,13 @@ function deleteConfirm(id){
 	}
 }
 
+//추천
+//눌렀다면 버튼 바꾸고, 다시 누르면 추천 취소
+function like(){
+	var text = Number($("#replyCount").text())+1;
+	$("#replyCount").html(text);
+}
+
 </script>
 <body>
 <div class="container" style="margin-top: 50px">
@@ -228,7 +235,7 @@ function deleteConfirm(id){
 							<span>${resultMap.article.writer } |</span> <span><small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${resultMap.article.regDate }"/></small></span>
 						</div>
 						<div style="float: right">
-							<span class="text-muted"><small>조회 | 댓글 | 추천 </small></span>
+							<span><small>조회 </small></span> | <small > 댓글 <span id = "replyCount">${resultMap.article.replyCount }</span> </small> | <small > 추천 <span id = "likeCount">${resultMap.article.likeCount }</span> </small>
 						</div>
 					</div>
 				</li>

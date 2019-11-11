@@ -10,23 +10,69 @@
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="regDate" column="reg_date" />
+		<result property="likeCount" column="like_count" />
+		<result property="replyCount" column="reply_count" />
 	</resultMap>
 	
 	<select id = "detail" parameterType="int" resultMap="ArticleResultMap">
-		select 
-			ID, 
-			BOARD_TB.MB_ID,
-			CATEGORY,
-			MEMBER_TB.MB_NICKNAME AS WRITER, 
-			TITLE, 
-			CONTENT, 
-			REG_DATE 
-		from 
-			BOARD_TB 
-			join MEMBER_TB 
-				on BOARD_TB.MB_ID = MEMBER_TB.MB_ID 
-		where
-			ID = #{id}
+		SELECT
+			b.ID, 
+			b.MB_ID,
+			b.CATEGORY,
+			b.WRITER, 
+			b.TITLE, 
+			b.CONTENT, 
+			b.REG_DATE,
+			like_count,
+			count(reply_tb.id) AS reply_count
+		FROM
+			(SELECT 
+				a.ID, 
+				a.MB_ID,
+				a.CATEGORY,
+				a.WRITER, 
+				a.TITLE, 
+				a.CONTENT, 
+				a.REG_DATE,
+				count(like_tb.id)AS like_count
+			FROM 
+				(select 
+					ID, 
+					BOARD_TB.MB_ID AS mb_id,
+					CATEGORY,
+					MEMBER_TB.MB_NICKNAME AS WRITER, 
+					TITLE, 
+					CONTENT, 
+					REG_DATE 
+				from 
+					BOARD_TB 
+				join MEMBER_TB 
+				on BOARD_TB.MB_ID = MEMBER_TB.MB_ID)a 
+													LEFT JOIN 
+														like_tb 
+													ON a.id = like_tb.board_id
+			where
+				a.ID = #{id}
+			GROUP BY 
+				a.id,
+				a.MB_ID,
+				a.CATEGORY,
+				a.WRITER, 
+				a.TITLE, 
+				a.CONTENT, 
+				a.REG_DATE)	b 
+							LEFT JOIN 
+								reply_tb 
+							ON b.id = reply_tb.board_id
+		GROUP BY
+			b.id,
+			b.MB_ID,
+			b.CATEGORY,
+			b.WRITER, 
+			b.TITLE, 
+			b.CONTENT, 
+			b.REG_DATE,
+			like_count
 	</select>
 	
 	<insert id="save" parameterType="ArticleCreateRequest">	

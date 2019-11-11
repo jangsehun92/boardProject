@@ -10,12 +10,14 @@ public class Article {
 	public String title;
 	public String content;
 	public Date regDate;
+	public int likeCount;
+	public int replyCount;
 	
 	public Article() {
 		
 	}
 	
-	public Article(int id, int memberId, String category, String writer, String title, String content, Date regDate) {
+	public Article(int id, int memberId, String category, String writer, String title, String content, Date regDate, int likeCount, int replyCount) {
 		this.id = id;
 		this.memberId = memberId;
 		this.category = category;
@@ -23,6 +25,8 @@ public class Article {
 		this.title = title;
 		this.content = content;
 		this.regDate = regDate;
+		this.likeCount = likeCount;
+		this.replyCount = replyCount;
 	}
 
 	public int getId() {
@@ -79,6 +83,22 @@ public class Article {
 
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public int getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 	
 }

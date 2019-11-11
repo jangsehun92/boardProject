@@ -9,6 +9,8 @@
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="regDate" column="reg_date" />
+		<result property="likeCount" column="like_count" />
+		<result property="replyCount" column="reply_count" />
 	</resultMap>
 	
 	<select id = "totalCount" parameterType="map" resultType="int">
@@ -31,53 +33,77 @@
 	
 	<select id="list" parameterType="map" resultMap="ArticleResultMap">
 		<![CDATA[
-		SELECT 
-			b.rnum,
-			b.id, 
-			b.category,
-			b.writer, 
-			b.title, 
-			b.content, 
-			b.reg_date 
+		SELECT
+			c.id, 
+			c.writer, 
+			c.category, 
+			c.title, 
+			c.content, 
+			c.reg_date,
+			count(like_tb.id) AS like_count, 
+			reply_count
 		FROM
-			(SELECT
-				rownum AS rnum, 
-				a.id, 
-				a.category,
-				a.writer, 
-				a.title, 
-				a.content, 
-				a.reg_date 
-			FROM 
-				(SELECT 
-					id, 
-					category,
-					member_tb.mb_nickname AS writer, 
-					title, 
-					content, 
-					reg_date 
+			(SELECT 
+				b.id, 
+				b.category,
+				b.writer, 
+				b.title, 
+				b.content, 
+				b.reg_date,
+				count(reply_tb.id) AS reply_count
+			FROM
+				(SELECT
+					rownum AS rnum, 
+					a.id, 
+					a.category,
+					a.writer, 
+					a.title, 
+					a.content, 
+					a.reg_date 
 				FROM 
-					board_tb 
+					(SELECT 
+						id, 
+						category,
+						member_tb.mb_nickname AS writer, 
+						title, 
+						content, 
+						reg_date 
+					FROM 
+						board_tb 
 					JOIN member_tb 
 						ON board_tb.mb_id = member_tb.mb_id 
-		]]>
+			]]>
 				<choose>
-				  <when test='searchType != null and searchType == "query"'>
-				    WHERE title LIKE '%'||#{query}||'%'
-				  </when>
-				  <when test='searchType != null and searchType == "id"'>
-				    WHERE board_tb.mb_id = #{memberId}
-				  </when>
-				  <otherwise>
-				    WHERE category = #{category}
-				  </otherwise>
-				</choose>
-		<![CDATA[
-			ORDER BY id DESC)a
-			WHERE 
-				rownum <= #{page} * #{countList} )b
-		where 
-			b.rnum >= (#{page}-1) * #{countList}+1
+					 <when test='searchType != null and searchType == "query"'>
+					WHERE 
+						title LIKE '%'||#{query}||'%'
+					  </when>
+					  <when test='searchType != null and searchType == "id"'>
+					WHERE 
+					  	board_tb.mb_id = #{memberId}
+					  </when>
+					  <otherwise>
+					WHERE 
+					  	category = #{category}
+					  </otherwise>
+					</choose>
+			<![CDATA[
+					)a
+					WHERE 
+						rownum <= #{page} * #{countList} )	b 
+															LEFT JOIN 
+																reply_tb 
+															ON 
+																b.id = reply_tb.board_id
+				where 
+					b.rnum >= (#{page}-1) * #{countList}+1
+					GROUP BY b.id, b.writer, b.category, b.title, b.content, b.reg_date)c 
+																						LEFT JOIN 
+																							like_tb 
+																						ON 
+																							c.id = like_tb.board_id
+		GROUP BY c.id, c.writer, c.category, c.title, c.content, c.reg_date, reply_count
+		ORDER BY c.id DESC
 		]]>
 	</select>
 </mapper>

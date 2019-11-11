@@ -43,6 +43,7 @@
 			<exclude-mapping path="/member/login"/>
 			<exclude-mapping path="/member/info/**"/>
 			<exclude-mapping path="/articles/{category}"/>
+			<exclude-mapping path="/error/**"/>
 			<beans:ref bean="loginInterCeptor"/>
 		</interceptor>
 	</interceptors>

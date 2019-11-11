@@ -40,8 +40,9 @@
 
 			<thead>
 				<tr>
-					<td class="col-md-3"><b>제목</b></td>
-					<td class="col-md-6" align="right"><b>작성자</b></td>
+					<td class="col-md-5"><b>제목</b></td>
+					<td class="col-md-1" align="right"><b>좋아요</b></td>
+					<td class="col-md-1" align="right"><b>작성자</b></td>
 					<td class="col-md-1" align="right"><b>작성 날짜</b></td>
 				</tr>
 			</thead>
@@ -56,7 +57,8 @@
 
 					<c:forEach items="${articleList }" var="article">
 						<tr>
-							<td><a href="/article/${article.id }">${article.title }</a></td>
+							<td><a href="/article/${article.id }">${article.title } (${article.replyCount })</a></td>
+							<td align="right">${article.likeCount }</td>
 							<td align="right">${article.writer }</td>
 							<td align="right">${article.regDate }</td>
 						</tr>
