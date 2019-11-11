@@ -7,16 +7,14 @@ public class MemberPasswordChangeRequest {
 	private String password;
 	private String newPassword;
 	
-	public MemberPasswordChangeRequest(String password, String newPassword) throws Exception {
-		PasswordSecurityUtil passwordSecurityUtil = new PasswordSecurityUtil();
-		this.password = passwordSecurityUtil.encryptPassword(password);
-		this.newPassword = passwordSecurityUtil.encryptPassword(newPassword);
+	public MemberPasswordChangeRequest() {
+		
 	}
 	
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -25,8 +23,18 @@ public class MemberPasswordChangeRequest {
 		return password;
 	}
 
+	public void setPassword(String password) throws Exception {
+		this.password = new PasswordSecurityUtil().encryptPassword(password);
+	}
+
 	public String getNewPassword() {
 		return newPassword;
 	}
+
+	public void setNewPassword(String newPassword)  throws Exception{
+		this.newPassword = new PasswordSecurityUtil().encryptPassword(newPassword);
+	}
+	
+
 	
 }

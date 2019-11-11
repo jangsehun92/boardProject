@@ -63,8 +63,8 @@ function check_form(){
 	});
 	return false;
 }
-
 </script>
+
 	<div class="container" style="margin-top: 80px; align-items: center;">
 		<div class="col-md-6 main-block-center">
 			<div class="panel panel-default">

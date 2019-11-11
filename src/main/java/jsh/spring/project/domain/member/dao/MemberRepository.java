@@ -8,7 +8,7 @@ import jsh.spring.project.domain.member.dto.RegisterRequest;
 @Repository
 public interface MemberRepository {
 	public int checkEmail(String email);
-	public int checkStatus(String email);
 	public int save(RegisterRequest dto);
+	public int checkStatus(String email);
 	public int updateStatus(RegisterConfirmRequest dto);
 }

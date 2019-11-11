@@ -39,7 +39,7 @@
 			<exclude-mapping path="/member/email/**"/>
 			<exclude-mapping path="/member/register"/>
 			<exclude-mapping path="/member/registerConfirm"/>
-			<exclude-mapping path="/member/resendEmail/**"/>
+			<exclude-mapping path="/member/resendEmail"/>
 			<exclude-mapping path="/member/login"/>
 			<exclude-mapping path="/member/info/**"/>
 			<exclude-mapping path="/articles/{category}"/>

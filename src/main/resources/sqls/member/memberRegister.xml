@@ -17,7 +17,7 @@
 			MEMBER_TB 
 		where 
 			MB_EMAIL = #{email} and
-			MB_STATUS = 'N'
+			MB_STATUS = 'Y'
 	</select>
 	
 	<insert id="save" parameterType="RegisterRequest">

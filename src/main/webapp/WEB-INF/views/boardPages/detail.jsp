@@ -49,11 +49,6 @@ function replyCreate(){
 }
 
 function replyList(){
-	/*
-	var articleId = { 
-		articleId : "${article.id}" 
-	}
-	*/
 	
 	$.ajax({
 		url:"/reply/${resultMap.article.id}",
@@ -309,27 +304,11 @@ function deleteConfirm(id){
 						
 						<c:otherwise>
 							<c:forEach items="${resultMap.replyList }" var="replyDto">
-								<!-- 										
-								<li class="list-group-item"><span>${ replyDto.nickname}</span><span class="text-muted"> | <small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${replyDto.regDate}"/></small></span>
-								<div id="dropdownForm-${replyDto.id}" style="float: right;">
-											<div class='btn-group'>
-												<button type='button' class='btn btn-default btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
-													<span class='caret'></span>
-												</button>
-												<ul class='dropdown-menu' role='menu'>
-													<li><a onClick='replyUpdateForm("+value.id+")'>수정</a></li>
-													<li><a onClick='deleteConfirm("+value.id+")'>삭제</a></li>
-												</ul>
-										</div>
-										</div>
-									<div class="" style="white-space : pre-wrap;height: 100%">${ replyDto.content}</div>
-								</li>
-								 -->
 								<li class="list-group-item">
 									<div style="position: relative; height: 100%">
 										<div>
 											<div>
-												<span>${ replyDto.nickname}</span><span class="text-muted"> | <small>uxin_timestamp(${ replyDto.nickname})</small></span>
+												<span>${ replyDto.nickname}</span><span class="text-muted"> | <small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${replyDto.regDate}"/></small></span>
 													<c:if test="${member.id eq replyDto.memberId}">
 													<div id="dropdownForm-${ replyDto.id}" style="float: right;">
 														<div class="btn-group">

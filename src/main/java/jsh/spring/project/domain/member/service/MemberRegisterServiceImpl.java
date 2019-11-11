@@ -3,9 +3,12 @@ package jsh.spring.project.domain.member.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jsh.spring.project.domain.member.api.MemberApi;
 import jsh.spring.project.domain.member.dao.AuthRepository;
 import jsh.spring.project.domain.member.dao.MemberRepository;
 import jsh.spring.project.domain.member.dto.RegisterConfirmRequest;
@@ -15,6 +18,8 @@ import jsh.spring.project.infra.email.EmailService;
 
 @Service
 public class MemberRegisterServiceImpl implements MemberRegisterService{
+	private static final Logger logger = LoggerFactory.getLogger(MemberRegisterServiceImpl.class);
+	
 	private final MemberRepository memberRepository;
 	private final AuthRepository authRepository;
 	private final EmailService emailService;
@@ -45,10 +50,16 @@ public class MemberRegisterServiceImpl implements MemberRegisterService{
 
 	@Override
 	@Transactional
-	public void updateStatus(RegisterConfirmRequest dto) throws Exception {
-		memberRepository.updateStatus(dto);
-		authRepository.expire(dto);
-		emailService.singUpEmail(dto.getEmail());
+	public boolean updateStatus(RegisterConfirmRequest dto) throws Exception {
+		if(memberRepository.checkStatus(dto.getEmail())==0) {
+			logger.info("[ MemberRegisterServiceImpl ] updateStatus : 인증 작업");
+			memberRepository.updateStatus(dto);
+			authRepository.expire(dto);
+			emailService.singUpEmail(dto.getEmail());
+			return true;
+		}
+		logger.info("[ MemberRegisterServiceImpl ] updateStatus : 이미 인증되었음");
+		return false;
 	}
 	
 	@Override
@@ -59,6 +70,4 @@ public class MemberRegisterServiceImpl implements MemberRegisterService{
 		authRepository.updateAuthKey(new RegisterConfirmRequest(email, authKey));
 		emailService.resendEmail(email, authKey);
 	}
-
-	
 }

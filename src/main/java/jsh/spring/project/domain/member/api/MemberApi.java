@@ -53,62 +53,45 @@ public class MemberApi {
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(Model model, RegisterRequest dto) throws Exception {
-//		memberRegisterService.checkEmail(dto.getEmail());
 		memberRegisterService.singUp(dto);
 		model.addAttribute("email", dto.getEmail());
 		return "memberPages/sendEmail";
 	}
 	
 	@RequestMapping(value = "/email", method = RequestMethod.GET)
-		public String emailPage() {
-			return "memberPages/sendEmail";
-		}
+	public String emailPage() {
+		return "memberPages/sendEmail";
+	}
 	
 	@RequestMapping(value = "/registerConfirm", method = RequestMethod.GET)
 	public String registerConfirm(Model model, RegisterConfirmRequest dto) throws Exception {
-		memberRegisterService.updateStatus(dto);
-		return "memberPages/login";
+		return memberRegisterService.updateStatus(dto)==true?"memberPages/login":"memberPages/authComplete";
 	}
 	
-	@RequestMapping(value = "/resendEmail/{email:.+}", method = RequestMethod.GET)
-	public String resendEmail(Model model, String email) throws Exception {
-		memberRegisterService.resendEmail(email);
-		return "memberPages/sendEmail";
-	}
-	/*
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Model model, HttpSession session, LoginRequest dto) {
-		if(session.getAttribute("member") != null) {
-			session.removeAttribute("member");
+	@RequestMapping(value = "/resendEmail", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<String> resendEmail(Model model, HttpSession session) throws Exception {
+		try {
+			memberRegisterService.resendEmail((String)session.getAttribute("email"));
+			return new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("ERROR", HttpStatus.BAD_REQUEST);
 		}
-		Member member = memberSearchService.signIn(dto);
-		
-		if(!member.checkStatus()) {
-			model.addAttribute("email", member.getEmail());
-			return "memberPages/sendEmail";
-		}
-		session.setAttribute("member", member);
-		return "home";
 	}
-	*/
 	
 	@RequestMapping(value = "/login", produces = "application/json; charset=UTF8", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<String> login_(Model model, HttpSession session, LoginRequest dto) {
+	public @ResponseBody ResponseEntity<String> login(Model model, HttpSession session, LoginRequest dto) {
 		Member member = memberSearchService.signIn(dto);
 		
-		//email&password 검색 결과 회원이고, email 인증도 완료한 상태 
 		if(member != null && member.checkStatus()) {
-			session.invalidate();
+			session.removeAttribute("eamil");
 			session.setAttribute("member", member);
 			return new ResponseEntity<String>("OK", HttpStatus.OK);
 		}
 		
-		//email&password 검색 결과 회원이고, email 인증이 안된 상태
 		if(member != null && !member.checkStatus()) {
 			session.setAttribute("email", member.getEmail());
 			return new ResponseEntity<String>(member.getEmail(), HttpStatus.FOUND);
 		}
-		//email&password 검색 결과 없을때
 		return new ResponseEntity<String>("이메일 또는 비밀번호가 다릅니다.", HttpStatus.NOT_FOUND);
 	}
 
@@ -153,18 +136,17 @@ public class MemberApi {
 		return "memberPages/passwordChange";
 	}
 		
-	@RequestMapping(value = "/passwordChange", method = RequestMethod.POST)
-	public String passwordChange(HttpSession session, HttpServletResponse response, MemberPasswordChangeRequest dto) throws IOException {
+	@RequestMapping(value = "/passwordChange", produces = "application/json; charset=UTF8", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<String> passwordChange(HttpSession session, HttpServletResponse response, MemberPasswordChangeRequest dto) throws IOException {
 		Member member = (Member)session.getAttribute("member");
 		dto.setId(member.getId());
 		
-		if(!memberProfileService.changePassword(dto)) {
-			return "memberPages/passwordChange";
+		if(memberProfileService.changePassword(dto)) {
+			session.invalidate();
+			return new ResponseEntity<String>("login", HttpStatus.OK);
 		}
+		return new ResponseEntity<String>("passwordChange", HttpStatus.NOT_FOUND);
 		
-		memberProfileService.changePassword(dto);
-		session.invalidate();
-		return "memberPages/login";
 	}
 
 }

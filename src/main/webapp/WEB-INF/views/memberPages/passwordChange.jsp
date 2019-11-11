@@ -51,6 +51,36 @@ function check_form(){
 		$("#newPassword").focus();
 		return false;
 	}
+	
+	var memberPasswordChangeRequest = {
+			password : password,
+			newPassword : newPassword
+	}
+	
+	
+	$.ajax({
+		url:"/member/passwordChange",
+		type:"post",
+		//contentType : "application/json; charset=UTF-8",
+		dataType : "text",
+		//data: JSON.stringify(loginRequest), 
+		data: memberPasswordChangeRequest,
+		success:function(data){
+			alert("비밀번호를 변경하였습니다. 다시 로그인 해주세요.");
+			location.href="/"+data;	
+		},
+		error:function(request,status,error){
+			if(request.status == '404'){
+				alert("비밀번호 변경에 실패하였습니다. 다시 확인해 주세요.");
+				location.href="/member/"+request.responseText;	
+			}else{
+				alert("알 수 없는 에러가 발생 하였습니다.");
+			}
+			//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	
+	return false;
 }
 
 </script>
