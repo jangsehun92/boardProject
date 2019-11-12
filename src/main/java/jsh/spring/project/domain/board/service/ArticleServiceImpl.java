@@ -26,9 +26,22 @@ public class ArticleServiceImpl implements ArticleService{
 	public Article getArticle(int id) {
 		return articleRepository.detail(id);
 	}
+	
+	@Override
+	public boolean checkLike(int id, int memberId) {
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("id", id);
+		paramMap.put("memberId", memberId);
+		
+		if(articleRepository.checkLike(paramMap)==1) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public Map<String, Object> detail(int id) {
+		articleRepository.viewCount(id);
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("article", articleRepository.detail(id));
 		resultMap.put("replyList", replyRepository.list(id));
@@ -49,6 +62,10 @@ public class ArticleServiceImpl implements ArticleService{
 	public void delete(int id) {
 		articleRepository.delete(id);
 	}
+
+	
+
+	
 
 	
 

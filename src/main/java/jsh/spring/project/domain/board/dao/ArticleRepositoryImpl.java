@@ -1,5 +1,7 @@
 package jsh.spring.project.domain.board.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,16 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 	
 	public ArticleRepositoryImpl(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+	
+	@Override
+	public int viewCount(int id) {
+		return sqlSession.update("articleMapper.viewCount",id);
+	}
+	
+	@Override
+	public int checkLike(Map<String, Integer> paramMap) {
+		return sqlSession.selectOne("articleMapper.checkLike", paramMap);
 	}
 
 	@Override
@@ -35,6 +47,10 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 	public int delete(int id) {
 		return sqlSession.delete("articleMapper.delete",id);
 	}
+
+	
+
+	
 	
 
 }

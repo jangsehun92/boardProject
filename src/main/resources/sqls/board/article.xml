@@ -10,9 +10,29 @@
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="regDate" column="reg_date" />
+		<result property="viewCount" column="view_count"/>
 		<result property="likeCount" column="like_count" />
 		<result property="replyCount" column="reply_count" />
 	</resultMap>
+	
+	<update id = "viewCount" parameterType="int">
+		UPDATE 
+			board_tb
+		SET
+			view_count = view_count+1
+		WHERE 
+			id = #{id}
+	</update>
+	
+	<select id = "checkLike" parameterType="map" resultType="int">
+		SELECT
+			count(id)
+		FROM
+			LIKE_TB
+		WHERE
+			board_id = #{id} AND
+			MB_ID = #{memberId}
+	</select>
 	
 	<select id = "detail" parameterType="int" resultMap="ArticleResultMap">
 		SELECT
@@ -23,6 +43,7 @@
 			b.TITLE, 
 			b.CONTENT, 
 			b.REG_DATE,
+			b.VIEW_COUNT,
 			like_count,
 			count(reply_tb.id) AS reply_count
 		FROM
@@ -34,6 +55,7 @@
 				a.TITLE, 
 				a.CONTENT, 
 				a.REG_DATE,
+				a.VIEW_COUNT,
 				count(like_tb.id)AS like_count
 			FROM 
 				(select 
@@ -43,7 +65,8 @@
 					MEMBER_TB.MB_NICKNAME AS WRITER, 
 					TITLE, 
 					CONTENT, 
-					REG_DATE 
+					REG_DATE,
+					VIEW_COUNT 
 				from 
 					BOARD_TB 
 				join MEMBER_TB 
@@ -59,7 +82,8 @@
 				a.CATEGORY,
 				a.WRITER, 
 				a.TITLE, 
-				a.CONTENT, 
+				a.CONTENT,
+				a.VIEW_COUNT, 
 				a.REG_DATE)	b 
 							LEFT JOIN 
 								reply_tb 
@@ -72,7 +96,8 @@
 			b.TITLE, 
 			b.CONTENT, 
 			b.REG_DATE,
-			like_count
+			b.VIEW_COUNT,
+			LIKE_COUNT
 	</select>
 	
 	<insert id="save" parameterType="ArticleCreateRequest">	
@@ -90,6 +115,7 @@
 			#{category}, 
 			#{title},
 			#{content},
+			0,
 			SYSDATE
 		)
 	</insert>

@@ -214,8 +214,30 @@ function deleteConfirm(id){
 //추천
 //눌렀다면 버튼 바꾸고, 다시 누르면 추천 취소
 function like(){
+	var id = ${resultMap.article.id};
+	var memberId = ${member.id};
+	
+	alert(id);
+	alert(memberId);
+	
+	$.ajax({
+		url:"/reply/"+id,
+		type:"put",
+		success:function(entity){
+			alert("댓글이 삭제되었습니다.");
+			replyList();
+		},
+		error:function(request,status,error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	
+	
+	
+	/*
 	var text = Number($("#replyCount").text())+1;
 	$("#replyCount").html(text);
+	*/
 }
 
 </script>
@@ -235,7 +257,7 @@ function like(){
 							<span>${resultMap.article.writer } |</span> <span><small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${resultMap.article.regDate }"/></small></span>
 						</div>
 						<div style="float: right">
-							<span><small>조회 </small></span> | <small > 댓글 <span id = "replyCount">${resultMap.article.replyCount }</span> </small> | <small > 추천 <span id = "likeCount">${resultMap.article.likeCount }</span> </small>
+							<small><span>조회 ${resultMap.article.viewCount }</span></small> | <small > 댓글 <span id = "replyCount">${resultMap.article.replyCount }</span> </small> | <small > 추천 <span id = "likeCount">${resultMap.article.likeCount }</span> </small>
 						</div>
 					</div>
 				</li>
@@ -261,8 +283,19 @@ function like(){
 					</c:if> 
 					</div>
 				<div style="float: right">
+				<c:if test="${!empty member}">
+					<c:if test="${resultMap.likeCheck == 'true'}">
+						<!-- 추천취소버튼(추천을 취소하시겠습니까?) -->
+						<!-- 
+						1. 서버로 일단 보낸다.
+						2. 체크 후 값이 있으면 삭제 없으면 삽입
+						3. 그 결과를 리턴해준다.
+						4. 받아온 결과를 기준으로 추천/추천취소을 표시해준다.
+						 -->
+						<input type="button" id="like" value="추천" onclick="like()">
+					</c:if>
+				</c:if>
 					<input type="button" class="btn btn-primary" value="추천">
-					<input type="button" class="btn btn-primary" value="비추천">
 				</div>
 			</div>
 			<hr>
@@ -351,6 +384,5 @@ function like(){
 
 	</div>
 </div>
-
 </body>
 </html>

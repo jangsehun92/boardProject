@@ -1,5 +1,6 @@
 package jsh.spring.project.domain.board.api;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -40,8 +41,12 @@ public class ArticleApi {
 
 	//READ
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String detail(Model model, @PathVariable("id") int id) {
+	public String detail(HttpSession session, Model model, @PathVariable("id") int id) {
+		Member member = (Member)session.getAttribute("member");
 		Map<String, Object> resultMap = articleService.detail(id);
+		if(member!=null) {
+			resultMap.put("likeCheck",articleService.checkLike(id, member.getId())==true?"true":"false");
+		}
 		model.addAttribute("resultMap", resultMap);
 		return "boardPages/detail";
 	}

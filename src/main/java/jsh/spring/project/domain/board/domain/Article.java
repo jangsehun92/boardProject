@@ -10,6 +10,7 @@ public class Article {
 	public String title;
 	public String content;
 	public Date regDate;
+	public int viewCount;
 	public int likeCount;
 	public int replyCount;
 	
@@ -17,7 +18,7 @@ public class Article {
 		
 	}
 	
-	public Article(int id, int memberId, String category, String writer, String title, String content, Date regDate, int likeCount, int replyCount) {
+	public Article(int id, int memberId, String category, String writer, String title, String content, Date regDate, int viewCount, int likeCount, int replyCount) {
 		this.id = id;
 		this.memberId = memberId;
 		this.category = category;
@@ -25,6 +26,7 @@ public class Article {
 		this.title = title;
 		this.content = content;
 		this.regDate = regDate;
+		this.viewCount = viewCount;
 		this.likeCount = likeCount;
 		this.replyCount = replyCount;
 	}
@@ -100,5 +102,15 @@ public class Article {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+	
+	
 	
 }
