@@ -10,6 +10,8 @@ public interface ArticleRepository {
 	public int viewCount(int id);
 	public Article detail(int id);
 	public int checkLike(Map<String, Integer> paramMap);
+	public int insertLike(Map<String, Integer> paramMap);
+	public int deleteLike(Map<String, Integer> paramMap);
 	public int create(ArticleCreateRequest dto);
 	public int update(ArticleUpdateRequest dto);
 	public int delete(int id);

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,5 +74,11 @@ public class ArticleApi {
 	public String delete(HttpSession session, @PathVariable("id")int id) {
 		articleService.delete(id);
 		return "redirect:/articles/"+(String)session.getAttribute("category");
+	}
+	
+	@RequestMapping(value = "/like/{id}", method = RequestMethod.POST)
+	public ResponseEntity<String> like(HttpSession session, @PathVariable("id")int id){
+		Member member = (Member)session.getAttribute("member");
+		return articleService.like(id, member.getId())==1? new ResponseEntity<String>("INSERT",HttpStatus.OK):new ResponseEntity<String>("DELETE",HttpStatus.OK);
 	}
 }

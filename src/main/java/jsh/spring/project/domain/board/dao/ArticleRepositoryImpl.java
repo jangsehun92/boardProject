@@ -27,6 +27,17 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 	public int checkLike(Map<String, Integer> paramMap) {
 		return sqlSession.selectOne("articleMapper.checkLike", paramMap);
 	}
+	
+	@Override
+	public int insertLike(Map<String, Integer> paramMap) {
+		System.out.println("****** articleSErviceImpl like : id - " + paramMap.get("id") + " memberId - " + paramMap.get("memberId"));
+		return sqlSession.insert("articleMapper.insertLike", paramMap);
+	}
+
+	@Override
+	public int deleteLike(Map<String, Integer> paramMap) {
+		return sqlSession.delete("articleMapper.deleteLike", paramMap);
+	}
 
 	@Override
 	public Article detail(int id) {
@@ -47,6 +58,8 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 	public int delete(int id) {
 		return sqlSession.delete("articleMapper.delete",id);
 	}
+
+	
 
 	
 

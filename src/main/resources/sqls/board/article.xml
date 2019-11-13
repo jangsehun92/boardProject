@@ -34,6 +34,26 @@
 			MB_ID = #{memberId}
 	</select>
 	
+	<insert id = "insertLike" parameterType="map">
+		INSERT INTO
+			LIKE_TB
+		VALUES(
+			like_tb_seq.nextval,
+			#{id},
+			#{memberId},
+			1
+		)	
+	</insert>
+	
+	<delete id = "deleteLike" parameterType="map">
+		DELETE
+		FROM
+			LIKE_TB
+		WHERE
+			board_id = #{id} AND
+			MB_ID = #{memberId}
+	</delete>
+	
 	<select id = "detail" parameterType="int" resultMap="ArticleResultMap">
 		SELECT
 			b.ID, 

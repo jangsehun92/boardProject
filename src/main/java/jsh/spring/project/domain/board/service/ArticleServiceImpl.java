@@ -38,6 +38,21 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		return false;
 	}
+	
+	@Override
+	public int like(int id, int memberId) {
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("id", id);
+		paramMap.put("memberId", memberId);
+		
+		System.out.println("****** articleSErviceImpl like : id - " + id + " memberId - " + memberId);
+		if(articleRepository.checkLike(paramMap)==1) {
+			articleRepository.deleteLike(paramMap);
+			return 0;
+		}
+		articleRepository.insertLike(paramMap);
+		return 1;
+	}
 
 	@Override
 	public Map<String, Object> detail(int id) {
@@ -62,6 +77,8 @@ public class ArticleServiceImpl implements ArticleService{
 	public void delete(int id) {
 		articleRepository.delete(id);
 	}
+
+	
 
 	
 
