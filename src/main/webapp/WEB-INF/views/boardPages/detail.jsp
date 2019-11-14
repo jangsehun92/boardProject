@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+
 function replyCreate(){
 	var content = $("#replyContent").val().replace(/\s|/gi,'');
 	
@@ -148,7 +149,7 @@ function replyForm(id){
 
 function replyUpdate(id){
 	var replyUpdateRequest = {
-			content : $("#replyContent-"+id).val(),
+		content : $("#replyContent-"+id).val(),
 	}
 	
 	$.ajax({
@@ -213,32 +214,42 @@ function deleteConfirm(id){
 
 //추천
 //눌렀다면 버튼 바꾸고, 다시 누르면 추천 취소
-function like(){
+function like(memberId){
+	var memberId = memberId;
 	var id = ${resultMap.article.id};
-	var memberId = ${member.id};
-	
-	alert(id);
-	alert(memberId);
 	
 	$.ajax({
-		url:"/reply/"+id,
-		type:"put",
-		success:function(entity){
-			alert("댓글이 삭제되었습니다.");
-			replyList();
+		url:"/article/like/"+id,
+		type:"post",
+		success:function(data){
+			var likeCount = Number($("#likeCount").text());
+			if(data=="DELETE"){
+				if(likeCount != 0){
+					$("#likeCount").html(Number(likeCount)-1);	
+					$("#like").val("추천 하기");
+					alert("추천하였습니다.");
+				}
+			}else{
+				$("#likeCount").html(Number(likeCount)+1);
+				$("#like").val("추천 취소");
+				alert("추천을 취소하였습니다.");
+			}
 		},
 		error:function(request,status,error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	});
-	
-	
-	
-	/*
-	var text = Number($("#replyCount").text())+1;
-	$("#replyCount").html(text);
-	*/
 }
+
+function login(){
+	if(confirm("로그인 하시겠습니까?")){
+		location.href="/login";	
+	}else{
+		return;
+	}
+	return false;
+}
+
 
 </script>
 <body>
@@ -283,19 +294,23 @@ function like(){
 					</c:if> 
 					</div>
 				<div style="float: right">
-				<c:if test="${!empty member}">
-					<c:if test="${resultMap.likeCheck == 'true'}">
-						<!-- 추천취소버튼(추천을 취소하시겠습니까?) -->
-						<!-- 
-						1. 서버로 일단 보낸다.
-						2. 체크 후 값이 있으면 삭제 없으면 삽입
-						3. 그 결과를 리턴해준다.
-						4. 받아온 결과를 기준으로 추천/추천취소을 표시해준다.
-						 -->
+					<!-- 
 						<input type="button" id="like" value="추천" onclick="like()">
-					</c:if>
-				</c:if>
-					<input type="button" class="btn btn-primary" value="추천">
+					<input type="button" class="btn btn-primary" value="추천" onclick="like()">
+					 -->
+					<c:choose>
+						<c:when test="${!empty member}">
+							<c:if test="${resultMap.likeCheck == 'true'}">
+								<input type="button" class="btn btn-primary" id="like" value="추천 취소" onclick="like(${member.id})">
+							</c:if>
+							<c:if test="${resultMap.likeCheck == 'false'}">
+								<input type="button" class="btn btn-primary" id="like" value="추천 하기" onclick="like(${member.id})">
+							</c:if>
+						</c:when>
+						<c:otherwise>
+								<input type="button" class="btn btn-primary" id="like" value="추천 하기" onclick="login()">
+						</c:otherwise>
+				</c:choose>
 				</div>
 			</div>
 			<hr>

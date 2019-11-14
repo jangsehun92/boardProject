@@ -30,7 +30,11 @@ public class BoardApi {
 	
 	//카테고리 별 게시판리스트(LIST) & 검색
 	@RequestMapping(value = "/{category}", method = RequestMethod.GET)
-	public String list(HttpSession session, Model model, @PathVariable("category") String category, @RequestParam(required = false, defaultValue="1")int page, @RequestParam(required = false)String query) {
+	public String list(HttpSession session, Model model,@PathVariable("category") String category, 
+														@RequestParam(required = false, defaultValue="1")int page, 
+														@RequestParam(required = false)String sort,
+														@RequestParam(required = false)String query
+														) {
 		session.setAttribute("category", category);
 		Map<String, Object> paramMap = new HashMap<String,Object>();
 		Map<String, Object> countParamMap = new HashMap<String,Object>();
