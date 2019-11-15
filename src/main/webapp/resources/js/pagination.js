@@ -3,7 +3,8 @@ $(function(){
 	var totalPage = $("#totalPage").val();
 	var startPage = $("#startPage").val(); 
 	var endPage = $("#endPage").val(); 
-	var page = $("#page").val();	
+	var page = $("#page").val();
+	var sort = $("#sort").val();
 	var query = $("#query").val();
 	
 	if(query==""){
@@ -14,7 +15,7 @@ $(function(){
 		}
 		
 		if(page > 1){
-			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(page-1)+"' aria-label='Previous'><span aria-hidden='true'>&lang;</span></a></li>");
+			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(page-1)+"&sort="+sort+"' aria-label='Previous'><span aria-hidden='true'>&lang;</span></a></li>");
 		}else{
 			$("#pagination").append("<li class='disabled'><a href='#' aria-label='Previous'><span aria-hidden='true'>&lang;</span></a></li>");
 		}
@@ -23,30 +24,30 @@ $(function(){
 			if (iCount == page) {
 		       $("#pagination").append("<li class='active'><a href='#'>"+iCount+"<span class='sr-only'></span></a></li>");
 		    } else {
-		    	$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+iCount+"'>" + iCount + "<span class='sr-only'></span></a></li>");
+		    	$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+iCount+"&sort="+sort+"'>" + iCount + "<span class='sr-only'></span></a></li>");
 		    }
 		}
 		
 		if(page < totalPage){
-			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(Number(page)+1)+"' aria-label='Next'><span aria-hidden='true'>&rang;</span></a></li>");
+			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(Number(page)+1)+"&sort="+sort+"' aria-label='Next'><span aria-hidden='true'>&rang;</span></a></li>");
 		}else{
 			$("#pagination").append("<li class='disabled'><a href='#' aria-label='Next'><span aria-hidden='true'>&rang;</span></a></li>");
 		}
 		
 		if(endPage < totalPage){
-			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+totalPage+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
+			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+totalPage+"&sort="+sort+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
 		}else{
 			$("#pagination").append("<li class='disabled'><a href='#' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
 		}
 	} else{
 		if(startPage > 1){
-			$("#pagination").append("<li class=''><a href='/articles/"+category+"?query="+query+"' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
+			$("#pagination").append("<li class=''><a href='/articles/"+category+"?query="+query+"&sort="+sort+"' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
 		}else{
 			$("#pagination").append("<li class='disabled'><a href='#' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
 		}
 		
 		if(page > 1){
-			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(page-1)+"&query="+query+"' aria-label='Previous'><span aria-hidden='true'>&lang;</span></a></li>");
+			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(page-1)+"&query="+query+"&sort="+sort+"' aria-label='Previous'><span aria-hidden='true'>&lang;</span></a></li>");
 		}else{
 			$("#pagination").append("<li class='disabled'><a href='#' aria-label='Previous'><span aria-hidden='true'>&lang;</span></a></li>");
 		}
@@ -55,18 +56,18 @@ $(function(){
 			if (iCount == page) {
 		       $("#pagination").append("<li class='active'><a href='#'>"+iCount+"<span class='sr-only'></span></a></li>");
 		    } else {
-		    	$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+iCount+"&query="+query+"'>" + iCount + "<span class='sr-only'></span></a></li>");
+		    	$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+iCount+"&query="+query+"&sort="+sort+"'>" + iCount + "<span class='sr-only'></span></a></li>");
 		    }
 		}
 		
 		if(page < totalPage){
-			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(Number(page)+1)+"&query="+query+"' aria-label='Next'><span aria-hidden='true'>&rang;</span></a></li>");
+			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+(Number(page)+1)+"&query="+query+"&sort="+sort+"' aria-label='Next'><span aria-hidden='true'>&rang;</span></a></li>");
 		}else{
 			$("#pagination").append("<li class='disabled'><a href='#' aria-label='Next'><span aria-hidden='true'>&rang;</span></a></li>");
 		}
 		
 		if(endPage < totalPage){
-			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+totalPage+"&query="+query+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
+			$("#pagination").append("<li class=''><a href='/articles/"+category+"?page="+totalPage+"&query="+query+"&sort="+sort+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
 		}else{
 			$("#pagination").append("<li class='disabled'><a href='#' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
 		}

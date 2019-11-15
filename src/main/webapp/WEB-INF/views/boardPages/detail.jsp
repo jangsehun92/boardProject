@@ -227,12 +227,12 @@ function like(memberId){
 				if(likeCount != 0){
 					$("#likeCount").html(Number(likeCount)-1);	
 					$("#like").val("추천 하기");
-					alert("추천하였습니다.");
+					alert("추천을 취소하였습니다.");
 				}
 			}else{
 				$("#likeCount").html(Number(likeCount)+1);
 				$("#like").val("추천 취소");
-				alert("추천을 취소하였습니다.");
+				alert("추천하였습니다.");
 			}
 		},
 		error:function(request,status,error){
@@ -294,10 +294,6 @@ function login(){
 					</c:if> 
 					</div>
 				<div style="float: right">
-					<!-- 
-						<input type="button" id="like" value="추천" onclick="like()">
-					<input type="button" class="btn btn-primary" value="추천" onclick="like()">
-					 -->
 					<c:choose>
 						<c:when test="${!empty member}">
 							<c:if test="${resultMap.likeCheck == 'true'}">
@@ -339,7 +335,6 @@ function login(){
 			<hr>
 				<input type="button" class="btn btn-primary" value="새로고침" onclick="listConfirm();">
 			<div>
-				
 				<ul class="list-group" id="replyList">
 					
 					<c:choose>
@@ -390,13 +385,11 @@ function login(){
 										</div>
 									</div>
 								</li>		
-														
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
 				</ul>
 			</div>
-
 	</div>
 </div>
 </body>

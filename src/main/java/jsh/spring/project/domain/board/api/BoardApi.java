@@ -32,7 +32,7 @@ public class BoardApi {
 	@RequestMapping(value = "/{category}", method = RequestMethod.GET)
 	public String list(HttpSession session, Model model,@PathVariable("category") String category, 
 														@RequestParam(required = false, defaultValue="1")int page, 
-														@RequestParam(required = false)String sort,
+														@RequestParam(required = false, defaultValue="id")String sort,
 														@RequestParam(required = false)String query
 														) {
 		session.setAttribute("category", category);
@@ -58,7 +58,8 @@ public class BoardApi {
 		
 		paramMap.put("page",page);
 		paramMap.put("countList",countList);
-		
+		paramMap.put("sort",sort);
+		model.addAttribute("sort",sort);
 		model.addAttribute("articleList", boardService.articleList(paramMap));
 		model.addAttribute("pagination", pagination);
 		return "boardPages/list";

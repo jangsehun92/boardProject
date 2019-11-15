@@ -4,13 +4,14 @@
 
 	<resultMap id="ArticleResultMap" type="Article">
 		<result property="id" column="id"/>
-		<result property="category" column="category"/>
 		<result property="writer" column="writer"/>
+		<result property="category" column="category"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="regDate" column="reg_date" />
-		<result property="likeCount" column="like_count" />
-		<result property="replyCount" column="reply_count" />
+		<result property="viewCount" column="viewcount"/>
+		<result property="likeCount" column="likecount" />
+		<result property="replyCount" column="replycount" />
 	</resultMap>
 	
 	<select id = "totalCount" parameterType="map" resultType="int">
@@ -40,70 +41,65 @@
 			c.title, 
 			c.content, 
 			c.reg_date,
-			count(like_tb.id) AS like_count, 
-			reply_count
+			c.viewcount,
+			count(like_tb.id) AS likecount, 
+			replycount
 		FROM
 			(SELECT 
 				b.id, 
-				b.category,
 				b.writer, 
+				b.category, 
 				b.title, 
 				b.content, 
 				b.reg_date,
-				count(reply_tb.id) AS reply_count
+				b.viewcount,
+				count(reply_tb.id) AS replycount
 			FROM
 				(SELECT
 					rownum AS rnum, 
 					a.id, 
-					a.category,
 					a.writer, 
+					a.category, 
 					a.title, 
 					a.content, 
-					a.reg_date 
-				FROM 
-					(SELECT 
+					a.reg_date,
+					a.viewcount
+				FROM (SELECT 
 						id, 
-						category,
 						member_tb.mb_nickname AS writer, 
+						category, 
 						title, 
 						content, 
-						reg_date 
+						reg_date,
+						view_count AS viewcount
 					FROM 
 						board_tb 
-					JOIN member_tb 
-						ON board_tb.mb_id = member_tb.mb_id 
+						JOIN member_tb 
+							on board_tb.mb_id = member_tb.mb_id  
 			]]>
 				<choose>
-					 <when test='searchType != null and searchType == "query"'>
+					<when test='searchType != null and searchType == "query"'>
 					WHERE 
 						title LIKE '%'||#{query}||'%'
-					  </when>
-					  <when test='searchType != null and searchType == "id"'>
+					</when>
+					<when test='searchType != null and searchType == "id"'>
 					WHERE 
 					  	board_tb.mb_id = #{memberId}
-					  </when>
-					  <otherwise>
+					</when>
+					<otherwise>
 					WHERE 
 					  	category = #{category}
-					  </otherwise>
-					</choose>
+					</otherwise>
+				</choose>
 			<![CDATA[
 					)a
-					WHERE 
-						rownum <= #{page} * #{countList} )	b 
-															LEFT JOIN 
-																reply_tb 
-															ON 
-																b.id = reply_tb.board_id
+				WHERE 
+					rownum <= #{page} * #{countList} )b LEFT JOIN reply_tb ON b.id = reply_tb.board_id
 				where 
 					b.rnum >= (#{page}-1) * #{countList}+1
-					GROUP BY b.id, b.writer, b.category, b.title, b.content, b.reg_date)c 
-																						LEFT JOIN 
-																							like_tb 
-																						ON 
-																							c.id = like_tb.board_id
-		GROUP BY c.id, c.writer, c.category, c.title, c.content, c.reg_date, reply_count
-		ORDER BY c.id DESC
+					GROUP BY b.id, b.writer, b.category, b.title, b.content, b.reg_date, b.viewcount)c LEFT JOIN like_tb ON c.id = like_tb.board_id
+		GROUP BY c.id, c.writer, c.category, c.title, c.content, c.reg_date, c.viewcount, replycount
+		ORDER BY ${sort} DESC
 		]]>
 	</select>
 </mapper>
