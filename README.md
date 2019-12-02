@@ -15,3 +15,12 @@ Spring + maven + oracle 기반 CRUD 게시판
 * DB : Oracle 11g
 
 
+## 구현 기능
+* 게시글 CRUD
+* 페이징
+* 검색 기능
+* 로그인 기능
+* 이메일 인증 기능
+
+
+
