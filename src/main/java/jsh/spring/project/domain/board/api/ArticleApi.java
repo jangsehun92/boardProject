@@ -52,7 +52,7 @@ public class ArticleApi {
 		model.addAttribute("resultMap", resultMap);
 		return "boardPages/detail";
 	}
-
+	
 	//UPDATE
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String update(HttpSession session,Model model, @PathVariable("id")int id, ArticleUpdateRequest dto) {

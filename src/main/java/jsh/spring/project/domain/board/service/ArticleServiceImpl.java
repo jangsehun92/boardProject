@@ -45,7 +45,6 @@ public class ArticleServiceImpl implements ArticleService{
 		paramMap.put("id", id);
 		paramMap.put("memberId", memberId);
 		
-		System.out.println("****** articleSErviceImpl like : id - " + id + " memberId - " + memberId);
 		if(articleRepository.checkLike(paramMap)==1) {
 			articleRepository.deleteLike(paramMap);
 			return 0;

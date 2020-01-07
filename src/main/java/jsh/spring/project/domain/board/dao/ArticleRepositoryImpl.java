@@ -30,7 +30,6 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 	
 	@Override
 	public int insertLike(Map<String, Integer> paramMap) {
-		System.out.println("****** articleSErviceImpl like : id - " + paramMap.get("id") + " memberId - " + paramMap.get("memberId"));
 		return sqlSession.insert("articleMapper.insertLike", paramMap);
 	}
 
