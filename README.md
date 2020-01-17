@@ -24,3 +24,4 @@ Spring + maven + oracle 기반 CRUD 게시판
 
 
 
+# 추후 SpringBoot를 이용하여 리펙토링
