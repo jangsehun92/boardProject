@@ -22,6 +22,3 @@ Spring + maven + oracle 기반 CRUD 게시판
 * 로그인 기능
 * 이메일 인증 기능
 
-
-
--추후 SpringBoot를 이용하여 리펙토링
