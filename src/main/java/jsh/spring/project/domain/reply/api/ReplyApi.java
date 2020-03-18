@@ -34,7 +34,6 @@ public class ReplyApi {
 	
 	@RequestMapping(value = "/{articleId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Reply>> list_test(@PathVariable("articleId")int articleId) {
-		System.out.println("*******" + articleId);
 		List<Reply> list = replyService.list(articleId);
 		return new ResponseEntity<List<Reply>>(list, HttpStatus.OK);
 	}
